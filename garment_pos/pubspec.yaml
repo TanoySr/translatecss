@@ -1,7 +1,7 @@
 name: garment_pos
 description: Garment POS - Offline-first Wholesale & Retail Point of Sale and Business Management System for garment shops (Android, Tablet, Windows).
 publish_to: 'none'
-version: 0.3.0+3
+version: 0.3.1+4
 
 # Verified on 2026-11-12 against pub.dev:
 # - Flutter stable 3.47.x / Dart 3.13.x is the current stable line.

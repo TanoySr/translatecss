@@ -40,6 +40,8 @@ class DashboardScreen extends ConsumerWidget {
         auth is AuthSignedIn && auth.can(AppPermissions.settingsManage);
     final canViewAudit =
         auth is AuthSignedIn && auth.can(AppPermissions.auditView);
+    final canViewProducts =
+        auth is AuthSignedIn && auth.can(AppPermissions.productsView);
 
     return Scaffold(
       appBar: AppBar(
@@ -68,18 +70,21 @@ class DashboardScreen extends ConsumerWidget {
         mobile: (context) => _DashboardBody(
           crossAxisCount: 2,
           canManageUsers: canManageUsers,
+          canViewProducts: canViewProducts,
           canManageSettings: canManageSettings,
           canViewAudit: canViewAudit,
         ),
         tablet: (context) => _DashboardBody(
           crossAxisCount: 3,
           canManageUsers: canManageUsers,
+          canViewProducts: canViewProducts,
           canManageSettings: canManageSettings,
           canViewAudit: canViewAudit,
         ),
         desktop: (context) => _DashboardBody(
           crossAxisCount: 4,
           canManageUsers: canManageUsers,
+          canViewProducts: canViewProducts,
           canManageSettings: canManageSettings,
           canViewAudit: canViewAudit,
         ),
@@ -150,12 +155,14 @@ class _DashboardBody extends ConsumerWidget {
   const _DashboardBody({
     required this.crossAxisCount,
     required this.canManageUsers,
+    required this.canViewProducts,
     required this.canManageSettings,
     required this.canViewAudit,
   });
 
   final int crossAxisCount;
   final bool canManageUsers;
+  final bool canViewProducts;
   final bool canManageSettings;
   final bool canViewAudit;
 
@@ -164,8 +171,6 @@ class _DashboardBody extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     final settingsCount = ref.watch(_settingsCountProvider);
 
-    final canViewProducts =
-        auth is AuthSignedIn && auth.can(AppPermissions.productsView);
     final tiles = <(IconData, String, int?, String?)>[
       (Icons.point_of_sale, l10n.modulePointOfSale, 5, null),
       (
