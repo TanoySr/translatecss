@@ -1,0 +1,57 @@
+{
+  "@@locale": "en",
+  "appTitle": "Garment POS",
+  "@appTitle": {
+    "description": "Application title"
+  },
+  "dashboard": "Dashboard",
+  "settings": "Settings",
+  "language": "Language",
+  "languageEnglish": "English",
+  "languageBengali": "বাংলা (Bengali)",
+  "shopNameNotSet": "Shop name not set yet",
+  "systemStatus": "System Status",
+  "databaseConnected": "Database connected",
+  "databaseSchemaVersion": "Database schema version: {version}",
+  "@databaseSchemaVersion": {
+    "placeholders": {
+      "version": {
+        "type": "int"
+      }
+    }
+  },
+  "savedSettingsCount": "Saved settings: {count}",
+  "@savedSettingsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "modulesTitle": "Business Modules",
+  "modulePointOfSale": "Point of Sale (POS)",
+  "moduleInventory": "Products & Inventory",
+  "moduleCustomers": "Customers & Suppliers",
+  "modulePurchase": "Purchase",
+  "moduleAccounts": "Accounts & Reports",
+  "moduleBackup": "Backup & Restore",
+  "plannedInPhase": "Coming in Phase {phase}",
+  "@plannedInPhase": {
+    "placeholders": {
+      "phase": {
+        "type": "int"
+      }
+    }
+  },
+  "openSettings": "Open Settings",
+  "settingsFoundationNote": "Shop settings, login and security will be added in Phase 2. This screen already saves the app language to the real database.",
+  "loading": "Loading…",
+  "somethingWentWrong": "Something went wrong: {error}",
+  "@somethingWentWrong": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  }
+}

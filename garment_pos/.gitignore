@@ -1,0 +1,28 @@
+# Flutter / Dart
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+build/
+coverage/
+
+# Generated platform folders are created locally with `flutter create .`
+# (see README > First-time setup). They are intentionally kept out of the
+# clean source ZIP.
+
+# IDEs
+.idea/
+.vscode/
+*.iml
+
+# App data / secrets - never ship inside source ZIP
+*.sqlite
+*.db
+*.key
+.env
+
+# OS files
+.DS_Store
+Thumbs.db
