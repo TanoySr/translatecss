@@ -2,6 +2,16 @@
 
 All notable changes to Garment POS are documented here.
 
+## [0.1.1] - 2026-11-12 — Phase 1 fix (first PC run)
+
+### Fixed
+- `settings_repository.dart`: added the missing
+  `app_constants.dart` import — `flutter analyze` reported
+  "Undefined name 'AppConstants'" on the first Windows run.
+- README setup guide: documented deleting the sample
+  `test/widget_test.dart` that `flutter create .` generates (it
+  references a non-existent `MyApp` class).
+
 ## [0.1.0] - 2026-11-12 — Phase 1: Foundation & Project Architecture
 
 ### Added

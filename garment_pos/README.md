@@ -54,6 +54,11 @@ flutter run
 `flutter create .` only adds platform folders — it never overwrites
 the code in `lib/`, `test/` or this documentation.
 
+> ⚠️ One cleanup after `flutter create .`: it also generates a sample
+> counter test at `test/widget_test.dart` that does **not** belong to
+> this project (it references a `MyApp` class that does not exist).
+> Delete that file: `del test\widget_test.dart`
+
 Requirements: Flutter stable installed, and for Windows builds the
 Visual Studio *Desktop development with C++* workload — see
 [docs/BUILD_WINDOWS.md](docs/BUILD_WINDOWS.md). Android setup is in
