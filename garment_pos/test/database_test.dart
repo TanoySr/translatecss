@@ -18,9 +18,9 @@ void main() {
       await database.close();
     });
 
-    test('database initialises at schema version 2', () {
-      expect(database.schemaVersion, 2);
-      expect(AppDatabase.currentSchemaVersion, 2);
+    test('database initialises at schema version 3', () {
+      expect(database.schemaVersion, 3);
+      expect(AppDatabase.currentSchemaVersion, 3);
     });
 
     test('Phase 2 tables exist (users, roles, audit, sequences)', () async {
@@ -29,6 +29,14 @@ void main() {
       expect(await database.select(database.roles).get(), isEmpty);
       expect(await database.select(database.auditLogs).get(), isEmpty);
       expect(await database.select(database.numberSequences).get(), isEmpty);
+    });
+
+    test('Phase 3 tables exist (products, variants, stock)', () async {
+      expect(await database.select(database.products).get(), isEmpty);
+      expect(await database.select(database.productVariants).get(), isEmpty);
+      expect(await database.select(database.stockMovements).get(), isEmpty);
+      expect(await database.select(database.productSets).get(), isEmpty);
+      expect(await database.select(database.priceTiers).get(), isEmpty);
     });
 
     test('settings table is created and starts empty', () async {

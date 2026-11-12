@@ -180,3 +180,240 @@ class NumberSequences extends Table {
     {sequenceKey},
   ];
 }
+
+// =====================================================================
+// Phase 3 — Product master & inventory (schema v3)
+// All prices are integer paise. Stock is tracked per variant.
+// =====================================================================
+
+/// Product categories; a row with [parentId] set is a sub-category.
+class Categories extends Table {
+  IntColumn get id => integer().autoIncrement()();
+  TextColumn get name => text()();
+  IntColumn get parentId => integer().nullable()();
+  IntColumn get createdAt => integer()();
+  IntColumn get updatedAt => integer()();
+
+  @override
+  List<Set<Column>> get uniqueKeys => [
+    {name},
+  ];
+}
+
+/// Product brands.
+class Brands extends Table {
+  IntColumn get id => integer().autoIncrement()();
+  TextColumn get name => text()();
+  IntColumn get createdAt => integer()();
+  IntColumn get updatedAt => integer()();
+
+  @override
+  List<Set<Column>> get uniqueKeys => [
+    {name},
+  ];
+}
+
+/// Customisable size list, e.g. S, M, L, XL, XXL, 3XL, Free Size,
+/// kids sizes. Seeded with common garment sizes; editable in Masters.
+class ProductSizes extends Table {
+  IntColumn get id => integer().autoIncrement()();
+  TextColumn get name => text()();
+  IntColumn get sortOrder => integer()();
+  BoolColumn get isActive => boolean()();
+  IntColumn get createdAt => integer()();
+  IntColumn get updatedAt => integer()();
+
+  @override
+  List<Set<Column>> get uniqueKeys => [
+    {name},
+  ];
+}
+
+/// Colour list for the variant matrix.
+class ProductColors extends Table {
+  IntColumn get id => integer().autoIncrement()();
+  TextColumn get name => text()();
+  TextColumn get hexCode => text().nullable()();
+  BoolColumn get isActive => boolean()();
+  IntColumn get createdAt => integer()();
+  IntColumn get updatedAt => integer()();
+
+  @override
+  List<Set<Column>> get uniqueKeys => [
+    {name},
+  ];
+}
+
+/// Configurable tax rates. Rates are stored as basis points
+/// (1200 = 12.00%) so no floating point is involved. Nothing about
+/// GST slabs is hardcoded — these rows are editable master data.
+class TaxRates extends Table {
+  IntColumn get id => integer().autoIncrement()();
+  TextColumn get name => text()();
+  IntColumn get rateBasisPoints => integer()();
+  BoolColumn get isDefault => boolean()();
+  IntColumn get createdAt => integer()();
+  IntColumn get updatedAt => integer()();
+
+  @override
+  List<Set<Column>> get uniqueKeys => [
+    {name},
+  ];
+}
+
+/// Product master. Per-variant stock lives in [ProductVariants].
+class Products extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
+  TextColumn get name => text()();
+
+  /// Shop product code, unique.
+  TextColumn get productCode => text()();
+
+  IntColumn get categoryId =>
+      integer().nullable().references(Categories, #id)();
+  IntColumn get brandId => integer().nullable().references(Brands, #id)();
+  TextColumn get subCategory => text().nullable()();
+  TextColumn get fabric => text().nullable()();
+  TextColumn get fit => text().nullable()();
+  TextColumn get sleeve => text().nullable()();
+  TextColumn get neck => text().nullable()();
+  TextColumn get hsnCode => text().nullable()();
+
+  /// Money — integer paise.
+  IntColumn get purchasePricePaise => integer()();
+  IntColumn get wholesalePricePaise => integer()();
+  IntColumn get retailPricePaise => integer().nullable()();
+  IntColumn get minSellingPricePaise => integer()();
+  IntColumn get mrpPaise => integer().nullable()();
+
+  /// Tax rate in basis points copied from the chosen TaxRates row,
+  /// so editing a tax rate never silently changes old products.
+  IntColumn get taxRateBasisPoints => integer()();
+
+  /// Minimum quantity for a wholesale sale of this product.
+  IntColumn get wholesaleMinQty => integer()();
+
+  /// A variant at or below this quantity is "low stock".
+  IntColumn get lowStockThreshold => integer()();
+
+  BoolColumn get isActive => boolean()();
+  TextColumn get description => text().nullable()();
+
+  IntColumn get createdAt => integer()();
+  IntColumn get updatedAt => integer()();
+  IntColumn get createdBy => integer().nullable()();
+  IntColumn get updatedBy => integer().nullable()();
+  BoolColumn get isDeleted => boolean()();
+  IntColumn get deletedAt => integer().nullable()();
+
+  @override
+  List<Set<Column>> get uniqueKeys => [
+    {productCode},
+  ];
+}
+
+/// One size × colour combination of a product, with its own
+/// barcode and stock quantity. Stock may never go negative except
+/// through an audited admin override (see InventoryService).
+class ProductVariants extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
+  IntColumn get productId => integer().references(Products, #id)();
+  IntColumn get sizeId => integer().references(ProductSizes, #id)();
+  IntColumn get colorId => integer().references(ProductColors, #id)();
+
+  /// Unique barcode (internally generated EAN-13-style or manual).
+  TextColumn get barcode => text()();
+
+  IntColumn get stockQuantity => integer()();
+
+  IntColumn get createdAt => integer()();
+  IntColumn get updatedAt => integer()();
+
+  @override
+  List<Set<Column>> get uniqueKeys => [
+    {barcode},
+    {productId, sizeId, colorId},
+  ];
+}
+
+/// Quantity-based wholesale price tiers for a product:
+/// at [minQuantity]+ pieces, the unit price becomes [pricePaise].
+class PriceTiers extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
+  IntColumn get productId => integer().references(Products, #id)();
+  IntColumn get minQuantity => integer()();
+  IntColumn get pricePaise => integer()();
+
+  IntColumn get createdAt => integer()();
+  IntColumn get updatedAt => integer()();
+
+  @override
+  List<Set<Column>> get uniqueKeys => [
+    {productId, minQuantity},
+  ];
+}
+
+/// Size sets / bundles / cartons for a product, e.g. a 5-piece set
+/// of S+M+L+XL+XXL one piece each.
+class ProductSets extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
+  IntColumn get productId => integer().references(Products, #id)();
+  TextColumn get name => text()();
+
+  /// set | bundle | carton
+  TextColumn get setType => text()();
+
+  IntColumn get createdAt => integer()();
+  IntColumn get updatedAt => integer()();
+}
+
+/// Composition of a [ProductSets] row: how many pieces of each
+/// size (and optionally colour) make one set/bundle/carton.
+class ProductSetItems extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
+  IntColumn get setId => integer().references(ProductSets, #id)();
+  IntColumn get sizeId => integer().references(ProductSizes, #id)();
+  IntColumn get colorId => integer().nullable()();
+  IntColumn get quantityPerSet => integer()();
+
+  IntColumn get createdAt => integer()();
+  IntColumn get updatedAt => integer()();
+}
+
+/// Every stock change, so stock can always be explained:
+/// opening, adjustment, purchase, sale, return, set_break.
+class StockMovements extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
+  IntColumn get variantId => integer().references(ProductVariants, #id)();
+
+  /// opening | adjustment | purchase | sale | sale_return |
+  /// purchase_return | set_sale
+  TextColumn get movementType => text()();
+
+  /// Signed change applied to stock (+ inward, - outward).
+  IntColumn get quantityChange => integer()();
+
+  /// Stock after this movement.
+  IntColumn get balanceAfter => integer()();
+
+  TextColumn get reason => text().nullable()();
+  IntColumn get userId => integer().nullable()();
+  IntColumn get createdAt => integer()();
+}
+
+/// Manual stock adjustments with a mandatory reason.
+class StockAdjustments extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
+  IntColumn get variantId => integer().references(ProductVariants, #id)();
+  IntColumn get quantityChange => integer()();
+  TextColumn get reason => text()();
+  IntColumn get userId => integer().nullable()();
+  IntColumn get createdAt => integer()();
+}

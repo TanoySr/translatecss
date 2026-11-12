@@ -97,5 +97,96 @@
   "autoBackup": "স্বয়ংক্রিয় ব্যাকআপ (Phase 10)",
   "saved": "সংরক্ষিত হয়েছে",
   "noUsersYet": "এখনো কোনো ব্যবহারকারী নেই",
-  "shopName": "দোকানের নাম"
+  "shopName": "দোকানের নাম",
+  "inventory": "পণ্য ও স্টক",
+  "addProduct": "নতুন পণ্য যোগ করুন",
+  "editProduct": "পণ্য সম্পাদনা",
+  "productName": "পণ্যের নাম",
+  "productCode": "পণ্যের কোড",
+  "category": "ক্যাটাগরি",
+  "brand": "ব্র্যান্ড",
+  "subCategory": "সাব-ক্যাটাগরি",
+  "fabric": "কাপড় (Fabric)",
+  "fit": "ফিট",
+  "sleeve": "হাতা (Sleeve)",
+  "neck": "গলা (Neck)",
+  "hsnCode": "HSN কোড",
+  "purchasePrice": "ক্রয় মূল্য (₹)",
+  "wholesalePrice": "পাইকারি মূল্য (₹)",
+  "retailPrice": "খুচরা মূল্য (₹)",
+  "minSellingPrice": "সর্বনিম্ন বিক্রয় মূল্য (₹)",
+  "mrp": "MRP (₹)",
+  "taxRate": "করের হার",
+  "wholesaleMinQty": "পাইকারি সর্বনিম্ন পরিমাণ",
+  "lowStockThreshold": "কম স্টক সতর্কতা",
+  "description": "বিবরণ",
+  "selectSizesColors": "সাইজ ও রং বেছে নিন",
+  "openingStock": "শুরুর স্টক",
+  "stock": "স্টক",
+  "barcode": "বারকোড",
+  "variants": "ভ্যারিয়েন্টসমূহ",
+  "totalStock": "মোট স্টক: {count}",
+  "@totalStock": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "searchProducts": "নাম বা কোড দিয়ে খুঁজুন",
+  "noProducts": "এখনো কোনো পণ্য নেই। প্রথম পণ্য যোগ করুন।",
+  "masters": "মাস্টার তথ্য (ক্যাটাগরি/ব্র্যান্ড/সাইজ/রং/কর)",
+  "categories": "ক্যাটাগরি",
+  "brands": "ব্র্যান্ড",
+  "sizes": "সাইজ",
+  "colors": "রং",
+  "taxRates": "করের হারসমূহ",
+  "add": "যোগ করুন",
+  "name": "নাম",
+  "adjustStock": "স্টক মেলান (Adjust)",
+  "adjustmentQty": "পরিমাণ পরিবর্তন (+/-)",
+  "reason": "কারণ",
+  "priceTiers": "পরিমাণ অনুযায়ী দাম (Price Tier)",
+  "minQty": "সর্বনিম্ন পরিমাণ",
+  "unitPrice": "একক দাম (₹)",
+  "addTier": "Tier যোগ করুন",
+  "sets": "সাইজ সেট / বান্ডল",
+  "setName": "সেটের নাম",
+  "setType": "ধরন",
+  "createSet": "সেট তৈরি করুন",
+  "availableSets": "পূর্ণ সেট আছে: {count}",
+  "@availableSets": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "piecesPerSet": "প্রতি সেটে পিস: {count}",
+  "@piecesPerSet": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "lowStock": "কম স্টক",
+  "outOfStock": "স্টক শেষ",
+  "labels": "বারকোড লেবেল",
+  "printLabels": "লেবেল প্রিন্ট করুন (PDF)",
+  "csvTools": "CSV আনা / পাঠানো",
+  "exportCsv": "CSV পাঠান (Export)",
+  "importCsv": "CSV আনুন (Import)",
+  "csvPasteHint": "এখানে CSV বসান, অথবা নিচে ফাইলের ঠিকানা লিখে লোড করুন",
+  "filePath": "ফাইলের ঠিকানা",
+  "loadFile": "ফাইল লোড করুন",
+  "runImport": "Import চালান",
+  "importDone": "Import শেষ",
+  "retailPriceNotSet": "খুচরা মূল্য দেওয়া নেই",
+  "costHidden": "অনুমতি না থাকায় খরচ লুকানো",
+  "qtyPerSet": "প্রতি সেটে পরিমাণ",
+  "delete": "মুছুন",
+  "productSaved": "পণ্য সংরক্ষিত হয়েছে",
+  "duplicateCode": "এই পণ্যের কোড আগেই আছে",
+  "stockNegativeBlocked": "স্টক মাইনাস হয়ে যাবে — আটকানো হয়েছে (Admin অনুমতি লাগবে)"
 }

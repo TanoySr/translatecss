@@ -2,6 +2,45 @@
 
 All notable changes to Garment POS are documented here.
 
+## [0.3.0] - 2026-11-12 — Phase 3: Product Master & Inventory
+
+### Added
+- Database schema **version 3**: categories, brands, products,
+  product_variants, product_sizes, product_colors, price_tiers,
+  tax_rates, stock_movements, stock_adjustments, product_sets,
+  product_set_items. Migration from v2 preserves all existing data.
+- Product master with full garment fields (category, brand, fabric,
+  fit, sleeve, neck, HSN, purchase/wholesale/retail/min-selling/MRP
+  prices in paise, tax rate, wholesale min qty, status, description).
+- Size × colour variant matrix: every variant has its own stock and
+  a unique generated EAN-style internal barcode (prefix 20 + check
+  digit), validated by BarcodeUtil.
+- Masters screens for categories, brands, sizes, colours and
+  configurable tax rates (seeded defaults are editable master data,
+  not hardcoded law — verify GST slabs with a CA).
+- Opening stock, manual stock adjustment with mandatory reason,
+  stock_movements ledger (opening/adjustment/sale/set_sale/...),
+  low-stock & out-of-stock list. Stock cannot go negative except
+  through an explicit override flag in the service layer.
+- Wholesale price tiers (e.g. 12+/50+/100+ pieces) with
+  priceForQuantity selection.
+- Size sets / bundles / cartons: composition by size (optionally
+  colour), complete-set availability from variant stock, set sale
+  deducting every component variant; individual piece sales reduce
+  complete sets automatically.
+- Barcode label preview (Code128) and PDF label printing via
+  `printing`/`pdf`; `barcode_widget` for on-screen barcodes.
+- CSV export (documents folder + preview) and CSV import
+  (paste or file path): find-or-create sizes/colours/products/
+  variants, stock set through audited adjustments, per-row errors
+  reported instead of failing the whole file.
+- Product create/edit screens; purchase & selling price changes
+  and stock adjustments written to the audit log. Purchase price
+  hidden without purchase_price.view permission.
+- Tests: barcode validity, CSV codec, inventory repository
+  (matrix+unique barcodes, duplicate code, negative-stock block,
+  tiers, set availability/sale, low stock, CSV round-trip), schema v3.
+
 ## [0.2.0] - 2026-11-12 — Phase 2: Authentication, Security & Settings
 
 ### Added

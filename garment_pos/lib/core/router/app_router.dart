@@ -6,6 +6,13 @@ import '../../features/auth/data/auth_provider.dart';
 import '../../features/auth/presentation/login_screen.dart';
 import '../../features/auth/presentation/setup_screen.dart';
 import '../../features/dashboard/presentation/dashboard_screen.dart';
+import '../../features/inventory/presentation/csv_screen.dart';
+import '../../features/inventory/presentation/inventory_screen.dart';
+import '../../features/inventory/presentation/labels_screen.dart';
+import '../../features/inventory/presentation/low_stock_screen.dart';
+import '../../features/inventory/presentation/masters_screen.dart';
+import '../../features/inventory/presentation/product_detail_screen.dart';
+import '../../features/inventory/presentation/product_form_screen.dart';
 import '../../features/settings/presentation/settings_screen.dart';
 import '../../features/users/presentation/audit_log_screen.dart';
 import '../../features/users/presentation/permissions_screen.dart';
@@ -26,6 +33,12 @@ class AppRoutes {
   static const String users = '/users';
   static const String permissions = '/permissions';
   static const String auditLog = '/audit-log';
+  static const String inventory = '/inventory';
+  static const String newProduct = '/inventory/new';
+  static const String masters = '/inventory/masters';
+  static const String lowStock = '/inventory/low-stock';
+  static const String labels = '/inventory/labels';
+  static const String csvTools = '/inventory/csv';
 }
 
 final GoRouter appRouter = GoRouter(
@@ -55,6 +68,45 @@ final GoRouter appRouter = GoRouter(
       path: AppRoutes.auditLog,
       name: 'audit-log',
       builder: (context, state) => const AuditLogScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.inventory,
+      name: 'inventory',
+      builder: (context, state) => const InventoryScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.newProduct,
+      name: 'new-product',
+      builder: (context, state) => const ProductFormScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.masters,
+      name: 'masters',
+      builder: (context, state) => const MastersScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.lowStock,
+      name: 'low-stock',
+      builder: (context, state) => const LowStockScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.labels,
+      name: 'labels',
+      builder: (context, state) => const LabelsScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.csvTools,
+      name: 'csv-tools',
+      builder: (context, state) => const CsvScreen(),
+    ),
+    // Keep after the static /inventory/* routes so 'masters',
+    // 'labels' etc. are not swallowed by the :id parameter.
+    GoRoute(
+      path: '${AppRoutes.inventory}/:id',
+      name: 'product-detail',
+      builder: (context, state) => ProductDetailScreen(
+        productId: int.parse(state.pathParameters['id']!),
+      ),
     ),
   ],
 );

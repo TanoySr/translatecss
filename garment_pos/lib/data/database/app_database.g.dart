@@ -1975,6 +1975,3569 @@ class NumberSequencesCompanion extends UpdateCompanion<NumberSequence> {
   }
 }
 
+class $CategoriesTable extends Categories
+    with TableInfo<$CategoriesTable, Category> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $CategoriesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>('id', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _nameMeta = VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>('name', aliasedName, false, type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _parentIdMeta = VerificationMeta('parentId');
+  @override
+  late final GeneratedColumn<int> parentId = GeneratedColumn<int>('parent_id', aliasedName, true, type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _createdAtMeta = VerificationMeta('createdAt');
+  @override
+  late final GeneratedColumn<int> createdAt = GeneratedColumn<int>('created_at', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _updatedAtMeta = VerificationMeta('updatedAt');
+  @override
+  late final GeneratedColumn<int> updatedAt = GeneratedColumn<int>('updated_at', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [id, name, parentId, createdAt, updatedAt];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'categories';
+  @override
+  VerificationContext validateIntegrity(Insertable<Category> instance, {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('name')) {
+      context.handle(_nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('parent_id')) {
+      context.handle(_parentIdMeta, parentId.isAcceptableOrUnknown(data['parent_id']!, _parentIdMeta));
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(_createdAtMeta, createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(_updatedAtMeta, updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta));
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    return context;
+  }
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  Category map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Category(
+      id: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      name: attachedDatabase.typeMapping.read(DriftSqlType.string, data['${effectivePrefix}name'])!,
+      parentId: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}parent_id']),
+      createdAt: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}created_at'])!,
+      updatedAt: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}updated_at'])!,
+    );
+  }
+  @override
+  $CategoriesTable createAlias(String alias) {
+    return $CategoriesTable(attachedDatabase, alias);
+  }
+}
+class Category extends DataClass implements Insertable<Category> {
+  final int id;
+  final String name;
+  final int? parentId;
+  final int createdAt;
+  final int updatedAt;
+  const Category({required this.id, required this.name, this.parentId, required this.createdAt, required this.updatedAt});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['name'] = Variable<String>(name);
+    if (!nullToAbsent || parentId != null) {
+      map['parent_id'] = Variable<int>(parentId);
+    }
+    map['created_at'] = Variable<int>(createdAt);
+    map['updated_at'] = Variable<int>(updatedAt);
+    return map;
+  }
+  CategoriesCompanion toCompanion(bool nullToAbsent) {
+    return CategoriesCompanion(
+      id: Value(id),
+      name: Value(name),
+      parentId: parentId == null && nullToAbsent ? const Value.absent() : Value(parentId),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+    );
+  }
+  factory Category.fromMap(Map<String, dynamic> map, {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Category(
+      id: serializer.fromJson<int>(map['id']),
+      name: serializer.fromJson<String>(map['name']),
+      parentId: serializer.fromJson<int?>(map['parentId']),
+      createdAt: serializer.fromJson<int>(map['createdAt']),
+      updatedAt: serializer.fromJson<int>(map['updatedAt']),
+    );
+  }
+  @override
+  String toString() {
+    return (StringBuffer('Category(')..write('id: $id, name: $name, parentId: $parentId, createdAt: $createdAt, updatedAt: $updatedAt')..write(')')).toString();
+  }
+  @override
+  int get hashCode => Object.hash(id, name, parentId, createdAt, updatedAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) || (other is Category && other.id == id && other.name == name && other.parentId == parentId && other.createdAt == createdAt && other.updatedAt == updatedAt);
+  Category copyWith({int? id, String? name, int? parentId, int? createdAt, int? updatedAt}) {
+    return Category(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      parentId: parentId ?? this.parentId,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+    );
+  }
+}
+class CategoriesCompanion extends UpdateCompanion<Category> {
+  final Value<int> id;
+  final Value<String> name;
+  final Value<int?> parentId;
+  final Value<int> createdAt;
+  final Value<int> updatedAt;
+  final Value<int> rowid;
+  const CategoriesCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.parentId = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  CategoriesCompanion.insert({
+    this.id = const Value.absent(),
+    required String name,
+    this.parentId = const Value.absent(),
+    required int createdAt,
+    required int updatedAt,
+    this.rowid = const Value.absent(),
+  }) : name = Value(name), createdAt = Value(createdAt), updatedAt = Value(updatedAt);
+  static Insertable<Category> custom({
+    Expression<int>? id,
+    Expression<String>? name,
+    Expression<int>? parentId,
+    Expression<int>? createdAt,
+    Expression<int>? updatedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (parentId != null) 'parent_id': parentId,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+  CategoriesCompanion copyWith({
+    Value<int>? id,
+    Value<String>? name,
+    Value<int?>? parentId,
+    Value<int>? createdAt,
+    Value<int>? updatedAt,
+    Value<int>? rowid,
+  }) {
+    return CategoriesCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      parentId: parentId ?? this.parentId,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (parentId.present) {
+      map['parent_id'] = Variable<int>(parentId.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<int>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<int>(updatedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+  @override
+  String toString() {
+    return (StringBuffer('CategoriesCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('parentId: $parentId, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $BrandsTable extends Brands
+    with TableInfo<$BrandsTable, Brand> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $BrandsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>('id', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _nameMeta = VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>('name', aliasedName, false, type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _createdAtMeta = VerificationMeta('createdAt');
+  @override
+  late final GeneratedColumn<int> createdAt = GeneratedColumn<int>('created_at', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _updatedAtMeta = VerificationMeta('updatedAt');
+  @override
+  late final GeneratedColumn<int> updatedAt = GeneratedColumn<int>('updated_at', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [id, name, createdAt, updatedAt];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'brands';
+  @override
+  VerificationContext validateIntegrity(Insertable<Brand> instance, {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('name')) {
+      context.handle(_nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(_createdAtMeta, createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(_updatedAtMeta, updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta));
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    return context;
+  }
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  Brand map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Brand(
+      id: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      name: attachedDatabase.typeMapping.read(DriftSqlType.string, data['${effectivePrefix}name'])!,
+      createdAt: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}created_at'])!,
+      updatedAt: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}updated_at'])!,
+    );
+  }
+  @override
+  $BrandsTable createAlias(String alias) {
+    return $BrandsTable(attachedDatabase, alias);
+  }
+}
+class Brand extends DataClass implements Insertable<Brand> {
+  final int id;
+  final String name;
+  final int createdAt;
+  final int updatedAt;
+  const Brand({required this.id, required this.name, required this.createdAt, required this.updatedAt});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['name'] = Variable<String>(name);
+    map['created_at'] = Variable<int>(createdAt);
+    map['updated_at'] = Variable<int>(updatedAt);
+    return map;
+  }
+  BrandsCompanion toCompanion(bool nullToAbsent) {
+    return BrandsCompanion(
+      id: Value(id),
+      name: Value(name),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+    );
+  }
+  factory Brand.fromMap(Map<String, dynamic> map, {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Brand(
+      id: serializer.fromJson<int>(map['id']),
+      name: serializer.fromJson<String>(map['name']),
+      createdAt: serializer.fromJson<int>(map['createdAt']),
+      updatedAt: serializer.fromJson<int>(map['updatedAt']),
+    );
+  }
+  @override
+  String toString() {
+    return (StringBuffer('Brand(')..write('id: $id, name: $name, createdAt: $createdAt, updatedAt: $updatedAt')..write(')')).toString();
+  }
+  @override
+  int get hashCode => Object.hash(id, name, createdAt, updatedAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) || (other is Brand && other.id == id && other.name == name && other.createdAt == createdAt && other.updatedAt == updatedAt);
+  Brand copyWith({int? id, String? name, int? createdAt, int? updatedAt}) {
+    return Brand(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+    );
+  }
+}
+class BrandsCompanion extends UpdateCompanion<Brand> {
+  final Value<int> id;
+  final Value<String> name;
+  final Value<int> createdAt;
+  final Value<int> updatedAt;
+  final Value<int> rowid;
+  const BrandsCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  BrandsCompanion.insert({
+    this.id = const Value.absent(),
+    required String name,
+    required int createdAt,
+    required int updatedAt,
+    this.rowid = const Value.absent(),
+  }) : name = Value(name), createdAt = Value(createdAt), updatedAt = Value(updatedAt);
+  static Insertable<Brand> custom({
+    Expression<int>? id,
+    Expression<String>? name,
+    Expression<int>? createdAt,
+    Expression<int>? updatedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+  BrandsCompanion copyWith({
+    Value<int>? id,
+    Value<String>? name,
+    Value<int>? createdAt,
+    Value<int>? updatedAt,
+    Value<int>? rowid,
+  }) {
+    return BrandsCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<int>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<int>(updatedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+  @override
+  String toString() {
+    return (StringBuffer('BrandsCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ProductSizesTable extends ProductSizes
+    with TableInfo<$ProductSizesTable, ProductSize> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ProductSizesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>('id', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _nameMeta = VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>('name', aliasedName, false, type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _sortOrderMeta = VerificationMeta('sortOrder');
+  @override
+  late final GeneratedColumn<int> sortOrder = GeneratedColumn<int>('sort_order', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _isActiveMeta = VerificationMeta('isActive');
+  @override
+  late final GeneratedColumn<bool> isActive = GeneratedColumn<bool>('is_active', aliasedName, false, type: DriftSqlType.bool, requiredDuringInsert: true);
+  static const VerificationMeta _createdAtMeta = VerificationMeta('createdAt');
+  @override
+  late final GeneratedColumn<int> createdAt = GeneratedColumn<int>('created_at', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _updatedAtMeta = VerificationMeta('updatedAt');
+  @override
+  late final GeneratedColumn<int> updatedAt = GeneratedColumn<int>('updated_at', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [id, name, sortOrder, isActive, createdAt, updatedAt];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'product_sizes';
+  @override
+  VerificationContext validateIntegrity(Insertable<ProductSize> instance, {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('name')) {
+      context.handle(_nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('sort_order')) {
+      context.handle(_sortOrderMeta, sortOrder.isAcceptableOrUnknown(data['sort_order']!, _sortOrderMeta));
+    } else if (isInserting) {
+      context.missing(_sortOrderMeta);
+    }
+    if (data.containsKey('is_active')) {
+      context.handle(_isActiveMeta, isActive.isAcceptableOrUnknown(data['is_active']!, _isActiveMeta));
+    } else if (isInserting) {
+      context.missing(_isActiveMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(_createdAtMeta, createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(_updatedAtMeta, updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta));
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    return context;
+  }
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ProductSize map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ProductSize(
+      id: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      name: attachedDatabase.typeMapping.read(DriftSqlType.string, data['${effectivePrefix}name'])!,
+      sortOrder: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}sort_order'])!,
+      isActive: attachedDatabase.typeMapping.read(DriftSqlType.bool, data['${effectivePrefix}is_active'])!,
+      createdAt: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}created_at'])!,
+      updatedAt: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}updated_at'])!,
+    );
+  }
+  @override
+  $ProductSizesTable createAlias(String alias) {
+    return $ProductSizesTable(attachedDatabase, alias);
+  }
+}
+class ProductSize extends DataClass implements Insertable<ProductSize> {
+  final int id;
+  final String name;
+  final int sortOrder;
+  final bool isActive;
+  final int createdAt;
+  final int updatedAt;
+  const ProductSize({required this.id, required this.name, required this.sortOrder, required this.isActive, required this.createdAt, required this.updatedAt});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['name'] = Variable<String>(name);
+    map['sort_order'] = Variable<int>(sortOrder);
+    map['is_active'] = Variable<bool>(isActive);
+    map['created_at'] = Variable<int>(createdAt);
+    map['updated_at'] = Variable<int>(updatedAt);
+    return map;
+  }
+  ProductSizesCompanion toCompanion(bool nullToAbsent) {
+    return ProductSizesCompanion(
+      id: Value(id),
+      name: Value(name),
+      sortOrder: Value(sortOrder),
+      isActive: Value(isActive),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+    );
+  }
+  factory ProductSize.fromMap(Map<String, dynamic> map, {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ProductSize(
+      id: serializer.fromJson<int>(map['id']),
+      name: serializer.fromJson<String>(map['name']),
+      sortOrder: serializer.fromJson<int>(map['sortOrder']),
+      isActive: serializer.fromJson<bool>(map['isActive']),
+      createdAt: serializer.fromJson<int>(map['createdAt']),
+      updatedAt: serializer.fromJson<int>(map['updatedAt']),
+    );
+  }
+  @override
+  String toString() {
+    return (StringBuffer('ProductSize(')..write('id: $id, name: $name, sortOrder: $sortOrder, isActive: $isActive, createdAt: $createdAt, updatedAt: $updatedAt')..write(')')).toString();
+  }
+  @override
+  int get hashCode => Object.hash(id, name, sortOrder, isActive, createdAt, updatedAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) || (other is ProductSize && other.id == id && other.name == name && other.sortOrder == sortOrder && other.isActive == isActive && other.createdAt == createdAt && other.updatedAt == updatedAt);
+  ProductSize copyWith({int? id, String? name, int? sortOrder, bool? isActive, int? createdAt, int? updatedAt}) {
+    return ProductSize(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      sortOrder: sortOrder ?? this.sortOrder,
+      isActive: isActive ?? this.isActive,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+    );
+  }
+}
+class ProductSizesCompanion extends UpdateCompanion<ProductSize> {
+  final Value<int> id;
+  final Value<String> name;
+  final Value<int> sortOrder;
+  final Value<bool> isActive;
+  final Value<int> createdAt;
+  final Value<int> updatedAt;
+  final Value<int> rowid;
+  const ProductSizesCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.sortOrder = const Value.absent(),
+    this.isActive = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ProductSizesCompanion.insert({
+    this.id = const Value.absent(),
+    required String name,
+    required int sortOrder,
+    required bool isActive,
+    required int createdAt,
+    required int updatedAt,
+    this.rowid = const Value.absent(),
+  }) : name = Value(name), sortOrder = Value(sortOrder), isActive = Value(isActive), createdAt = Value(createdAt), updatedAt = Value(updatedAt);
+  static Insertable<ProductSize> custom({
+    Expression<int>? id,
+    Expression<String>? name,
+    Expression<int>? sortOrder,
+    Expression<bool>? isActive,
+    Expression<int>? createdAt,
+    Expression<int>? updatedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (sortOrder != null) 'sort_order': sortOrder,
+      if (isActive != null) 'is_active': isActive,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+  ProductSizesCompanion copyWith({
+    Value<int>? id,
+    Value<String>? name,
+    Value<int>? sortOrder,
+    Value<bool>? isActive,
+    Value<int>? createdAt,
+    Value<int>? updatedAt,
+    Value<int>? rowid,
+  }) {
+    return ProductSizesCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      sortOrder: sortOrder ?? this.sortOrder,
+      isActive: isActive ?? this.isActive,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (sortOrder.present) {
+      map['sort_order'] = Variable<int>(sortOrder.value);
+    }
+    if (isActive.present) {
+      map['is_active'] = Variable<bool>(isActive.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<int>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<int>(updatedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+  @override
+  String toString() {
+    return (StringBuffer('ProductSizesCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('sortOrder: $sortOrder, ')
+          ..write('isActive: $isActive, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ProductColorsTable extends ProductColors
+    with TableInfo<$ProductColorsTable, ProductColor> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ProductColorsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>('id', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _nameMeta = VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>('name', aliasedName, false, type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _hexCodeMeta = VerificationMeta('hexCode');
+  @override
+  late final GeneratedColumn<String> hexCode = GeneratedColumn<String>('hex_code', aliasedName, true, type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _isActiveMeta = VerificationMeta('isActive');
+  @override
+  late final GeneratedColumn<bool> isActive = GeneratedColumn<bool>('is_active', aliasedName, false, type: DriftSqlType.bool, requiredDuringInsert: true);
+  static const VerificationMeta _createdAtMeta = VerificationMeta('createdAt');
+  @override
+  late final GeneratedColumn<int> createdAt = GeneratedColumn<int>('created_at', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _updatedAtMeta = VerificationMeta('updatedAt');
+  @override
+  late final GeneratedColumn<int> updatedAt = GeneratedColumn<int>('updated_at', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [id, name, hexCode, isActive, createdAt, updatedAt];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'product_colors';
+  @override
+  VerificationContext validateIntegrity(Insertable<ProductColor> instance, {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('name')) {
+      context.handle(_nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('hex_code')) {
+      context.handle(_hexCodeMeta, hexCode.isAcceptableOrUnknown(data['hex_code']!, _hexCodeMeta));
+    }
+    if (data.containsKey('is_active')) {
+      context.handle(_isActiveMeta, isActive.isAcceptableOrUnknown(data['is_active']!, _isActiveMeta));
+    } else if (isInserting) {
+      context.missing(_isActiveMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(_createdAtMeta, createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(_updatedAtMeta, updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta));
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    return context;
+  }
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ProductColor map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ProductColor(
+      id: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      name: attachedDatabase.typeMapping.read(DriftSqlType.string, data['${effectivePrefix}name'])!,
+      hexCode: attachedDatabase.typeMapping.read(DriftSqlType.string, data['${effectivePrefix}hex_code']),
+      isActive: attachedDatabase.typeMapping.read(DriftSqlType.bool, data['${effectivePrefix}is_active'])!,
+      createdAt: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}created_at'])!,
+      updatedAt: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}updated_at'])!,
+    );
+  }
+  @override
+  $ProductColorsTable createAlias(String alias) {
+    return $ProductColorsTable(attachedDatabase, alias);
+  }
+}
+class ProductColor extends DataClass implements Insertable<ProductColor> {
+  final int id;
+  final String name;
+  final String? hexCode;
+  final bool isActive;
+  final int createdAt;
+  final int updatedAt;
+  const ProductColor({required this.id, required this.name, this.hexCode, required this.isActive, required this.createdAt, required this.updatedAt});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['name'] = Variable<String>(name);
+    if (!nullToAbsent || hexCode != null) {
+      map['hex_code'] = Variable<String>(hexCode);
+    }
+    map['is_active'] = Variable<bool>(isActive);
+    map['created_at'] = Variable<int>(createdAt);
+    map['updated_at'] = Variable<int>(updatedAt);
+    return map;
+  }
+  ProductColorsCompanion toCompanion(bool nullToAbsent) {
+    return ProductColorsCompanion(
+      id: Value(id),
+      name: Value(name),
+      hexCode: hexCode == null && nullToAbsent ? const Value.absent() : Value(hexCode),
+      isActive: Value(isActive),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+    );
+  }
+  factory ProductColor.fromMap(Map<String, dynamic> map, {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ProductColor(
+      id: serializer.fromJson<int>(map['id']),
+      name: serializer.fromJson<String>(map['name']),
+      hexCode: serializer.fromJson<String?>(map['hexCode']),
+      isActive: serializer.fromJson<bool>(map['isActive']),
+      createdAt: serializer.fromJson<int>(map['createdAt']),
+      updatedAt: serializer.fromJson<int>(map['updatedAt']),
+    );
+  }
+  @override
+  String toString() {
+    return (StringBuffer('ProductColor(')..write('id: $id, name: $name, hexCode: $hexCode, isActive: $isActive, createdAt: $createdAt, updatedAt: $updatedAt')..write(')')).toString();
+  }
+  @override
+  int get hashCode => Object.hash(id, name, hexCode, isActive, createdAt, updatedAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) || (other is ProductColor && other.id == id && other.name == name && other.hexCode == hexCode && other.isActive == isActive && other.createdAt == createdAt && other.updatedAt == updatedAt);
+  ProductColor copyWith({int? id, String? name, String? hexCode, bool? isActive, int? createdAt, int? updatedAt}) {
+    return ProductColor(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      hexCode: hexCode ?? this.hexCode,
+      isActive: isActive ?? this.isActive,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+    );
+  }
+}
+class ProductColorsCompanion extends UpdateCompanion<ProductColor> {
+  final Value<int> id;
+  final Value<String> name;
+  final Value<String?> hexCode;
+  final Value<bool> isActive;
+  final Value<int> createdAt;
+  final Value<int> updatedAt;
+  final Value<int> rowid;
+  const ProductColorsCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.hexCode = const Value.absent(),
+    this.isActive = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ProductColorsCompanion.insert({
+    this.id = const Value.absent(),
+    required String name,
+    this.hexCode = const Value.absent(),
+    required bool isActive,
+    required int createdAt,
+    required int updatedAt,
+    this.rowid = const Value.absent(),
+  }) : name = Value(name), isActive = Value(isActive), createdAt = Value(createdAt), updatedAt = Value(updatedAt);
+  static Insertable<ProductColor> custom({
+    Expression<int>? id,
+    Expression<String>? name,
+    Expression<String>? hexCode,
+    Expression<bool>? isActive,
+    Expression<int>? createdAt,
+    Expression<int>? updatedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (hexCode != null) 'hex_code': hexCode,
+      if (isActive != null) 'is_active': isActive,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+  ProductColorsCompanion copyWith({
+    Value<int>? id,
+    Value<String>? name,
+    Value<String?>? hexCode,
+    Value<bool>? isActive,
+    Value<int>? createdAt,
+    Value<int>? updatedAt,
+    Value<int>? rowid,
+  }) {
+    return ProductColorsCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      hexCode: hexCode ?? this.hexCode,
+      isActive: isActive ?? this.isActive,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (hexCode.present) {
+      map['hex_code'] = Variable<String>(hexCode.value);
+    }
+    if (isActive.present) {
+      map['is_active'] = Variable<bool>(isActive.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<int>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<int>(updatedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+  @override
+  String toString() {
+    return (StringBuffer('ProductColorsCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('hexCode: $hexCode, ')
+          ..write('isActive: $isActive, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $TaxRatesTable extends TaxRates
+    with TableInfo<$TaxRatesTable, TaxRate> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $TaxRatesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>('id', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _nameMeta = VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>('name', aliasedName, false, type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _rateBasisPointsMeta = VerificationMeta('rateBasisPoints');
+  @override
+  late final GeneratedColumn<int> rateBasisPoints = GeneratedColumn<int>('rate_basis_points', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _isDefaultMeta = VerificationMeta('isDefault');
+  @override
+  late final GeneratedColumn<bool> isDefault = GeneratedColumn<bool>('is_default', aliasedName, false, type: DriftSqlType.bool, requiredDuringInsert: true);
+  static const VerificationMeta _createdAtMeta = VerificationMeta('createdAt');
+  @override
+  late final GeneratedColumn<int> createdAt = GeneratedColumn<int>('created_at', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _updatedAtMeta = VerificationMeta('updatedAt');
+  @override
+  late final GeneratedColumn<int> updatedAt = GeneratedColumn<int>('updated_at', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [id, name, rateBasisPoints, isDefault, createdAt, updatedAt];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'tax_rates';
+  @override
+  VerificationContext validateIntegrity(Insertable<TaxRate> instance, {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('name')) {
+      context.handle(_nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('rate_basis_points')) {
+      context.handle(_rateBasisPointsMeta, rateBasisPoints.isAcceptableOrUnknown(data['rate_basis_points']!, _rateBasisPointsMeta));
+    } else if (isInserting) {
+      context.missing(_rateBasisPointsMeta);
+    }
+    if (data.containsKey('is_default')) {
+      context.handle(_isDefaultMeta, isDefault.isAcceptableOrUnknown(data['is_default']!, _isDefaultMeta));
+    } else if (isInserting) {
+      context.missing(_isDefaultMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(_createdAtMeta, createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(_updatedAtMeta, updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta));
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    return context;
+  }
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  TaxRate map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TaxRate(
+      id: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      name: attachedDatabase.typeMapping.read(DriftSqlType.string, data['${effectivePrefix}name'])!,
+      rateBasisPoints: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}rate_basis_points'])!,
+      isDefault: attachedDatabase.typeMapping.read(DriftSqlType.bool, data['${effectivePrefix}is_default'])!,
+      createdAt: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}created_at'])!,
+      updatedAt: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}updated_at'])!,
+    );
+  }
+  @override
+  $TaxRatesTable createAlias(String alias) {
+    return $TaxRatesTable(attachedDatabase, alias);
+  }
+}
+class TaxRate extends DataClass implements Insertable<TaxRate> {
+  final int id;
+  final String name;
+  final int rateBasisPoints;
+  final bool isDefault;
+  final int createdAt;
+  final int updatedAt;
+  const TaxRate({required this.id, required this.name, required this.rateBasisPoints, required this.isDefault, required this.createdAt, required this.updatedAt});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['name'] = Variable<String>(name);
+    map['rate_basis_points'] = Variable<int>(rateBasisPoints);
+    map['is_default'] = Variable<bool>(isDefault);
+    map['created_at'] = Variable<int>(createdAt);
+    map['updated_at'] = Variable<int>(updatedAt);
+    return map;
+  }
+  TaxRatesCompanion toCompanion(bool nullToAbsent) {
+    return TaxRatesCompanion(
+      id: Value(id),
+      name: Value(name),
+      rateBasisPoints: Value(rateBasisPoints),
+      isDefault: Value(isDefault),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+    );
+  }
+  factory TaxRate.fromMap(Map<String, dynamic> map, {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TaxRate(
+      id: serializer.fromJson<int>(map['id']),
+      name: serializer.fromJson<String>(map['name']),
+      rateBasisPoints: serializer.fromJson<int>(map['rateBasisPoints']),
+      isDefault: serializer.fromJson<bool>(map['isDefault']),
+      createdAt: serializer.fromJson<int>(map['createdAt']),
+      updatedAt: serializer.fromJson<int>(map['updatedAt']),
+    );
+  }
+  @override
+  String toString() {
+    return (StringBuffer('TaxRate(')..write('id: $id, name: $name, rateBasisPoints: $rateBasisPoints, isDefault: $isDefault, createdAt: $createdAt, updatedAt: $updatedAt')..write(')')).toString();
+  }
+  @override
+  int get hashCode => Object.hash(id, name, rateBasisPoints, isDefault, createdAt, updatedAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) || (other is TaxRate && other.id == id && other.name == name && other.rateBasisPoints == rateBasisPoints && other.isDefault == isDefault && other.createdAt == createdAt && other.updatedAt == updatedAt);
+  TaxRate copyWith({int? id, String? name, int? rateBasisPoints, bool? isDefault, int? createdAt, int? updatedAt}) {
+    return TaxRate(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      rateBasisPoints: rateBasisPoints ?? this.rateBasisPoints,
+      isDefault: isDefault ?? this.isDefault,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+    );
+  }
+}
+class TaxRatesCompanion extends UpdateCompanion<TaxRate> {
+  final Value<int> id;
+  final Value<String> name;
+  final Value<int> rateBasisPoints;
+  final Value<bool> isDefault;
+  final Value<int> createdAt;
+  final Value<int> updatedAt;
+  final Value<int> rowid;
+  const TaxRatesCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.rateBasisPoints = const Value.absent(),
+    this.isDefault = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  TaxRatesCompanion.insert({
+    this.id = const Value.absent(),
+    required String name,
+    required int rateBasisPoints,
+    required bool isDefault,
+    required int createdAt,
+    required int updatedAt,
+    this.rowid = const Value.absent(),
+  }) : name = Value(name), rateBasisPoints = Value(rateBasisPoints), isDefault = Value(isDefault), createdAt = Value(createdAt), updatedAt = Value(updatedAt);
+  static Insertable<TaxRate> custom({
+    Expression<int>? id,
+    Expression<String>? name,
+    Expression<int>? rateBasisPoints,
+    Expression<bool>? isDefault,
+    Expression<int>? createdAt,
+    Expression<int>? updatedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (rateBasisPoints != null) 'rate_basis_points': rateBasisPoints,
+      if (isDefault != null) 'is_default': isDefault,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+  TaxRatesCompanion copyWith({
+    Value<int>? id,
+    Value<String>? name,
+    Value<int>? rateBasisPoints,
+    Value<bool>? isDefault,
+    Value<int>? createdAt,
+    Value<int>? updatedAt,
+    Value<int>? rowid,
+  }) {
+    return TaxRatesCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      rateBasisPoints: rateBasisPoints ?? this.rateBasisPoints,
+      isDefault: isDefault ?? this.isDefault,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (rateBasisPoints.present) {
+      map['rate_basis_points'] = Variable<int>(rateBasisPoints.value);
+    }
+    if (isDefault.present) {
+      map['is_default'] = Variable<bool>(isDefault.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<int>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<int>(updatedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+  @override
+  String toString() {
+    return (StringBuffer('TaxRatesCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('rateBasisPoints: $rateBasisPoints, ')
+          ..write('isDefault: $isDefault, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ProductsTable extends Products
+    with TableInfo<$ProductsTable, Product> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ProductsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>('id', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _nameMeta = VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>('name', aliasedName, false, type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _productCodeMeta = VerificationMeta('productCode');
+  @override
+  late final GeneratedColumn<String> productCode = GeneratedColumn<String>('product_code', aliasedName, false, type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _categoryIdMeta = VerificationMeta('categoryId');
+  @override
+  late final GeneratedColumn<int> categoryId = GeneratedColumn<int>('category_id', aliasedName, true, type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _brandIdMeta = VerificationMeta('brandId');
+  @override
+  late final GeneratedColumn<int> brandId = GeneratedColumn<int>('brand_id', aliasedName, true, type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _subCategoryMeta = VerificationMeta('subCategory');
+  @override
+  late final GeneratedColumn<String> subCategory = GeneratedColumn<String>('sub_category', aliasedName, true, type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _fabricMeta = VerificationMeta('fabric');
+  @override
+  late final GeneratedColumn<String> fabric = GeneratedColumn<String>('fabric', aliasedName, true, type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _fitMeta = VerificationMeta('fit');
+  @override
+  late final GeneratedColumn<String> fit = GeneratedColumn<String>('fit', aliasedName, true, type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _sleeveMeta = VerificationMeta('sleeve');
+  @override
+  late final GeneratedColumn<String> sleeve = GeneratedColumn<String>('sleeve', aliasedName, true, type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _neckMeta = VerificationMeta('neck');
+  @override
+  late final GeneratedColumn<String> neck = GeneratedColumn<String>('neck', aliasedName, true, type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _hsnCodeMeta = VerificationMeta('hsnCode');
+  @override
+  late final GeneratedColumn<String> hsnCode = GeneratedColumn<String>('hsn_code', aliasedName, true, type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _purchasePricePaiseMeta = VerificationMeta('purchasePricePaise');
+  @override
+  late final GeneratedColumn<int> purchasePricePaise = GeneratedColumn<int>('purchase_price_paise', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _wholesalePricePaiseMeta = VerificationMeta('wholesalePricePaise');
+  @override
+  late final GeneratedColumn<int> wholesalePricePaise = GeneratedColumn<int>('wholesale_price_paise', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _retailPricePaiseMeta = VerificationMeta('retailPricePaise');
+  @override
+  late final GeneratedColumn<int> retailPricePaise = GeneratedColumn<int>('retail_price_paise', aliasedName, true, type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _minSellingPricePaiseMeta = VerificationMeta('minSellingPricePaise');
+  @override
+  late final GeneratedColumn<int> minSellingPricePaise = GeneratedColumn<int>('min_selling_price_paise', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _mrpPaiseMeta = VerificationMeta('mrpPaise');
+  @override
+  late final GeneratedColumn<int> mrpPaise = GeneratedColumn<int>('mrp_paise', aliasedName, true, type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _taxRateBasisPointsMeta = VerificationMeta('taxRateBasisPoints');
+  @override
+  late final GeneratedColumn<int> taxRateBasisPoints = GeneratedColumn<int>('tax_rate_basis_points', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _wholesaleMinQtyMeta = VerificationMeta('wholesaleMinQty');
+  @override
+  late final GeneratedColumn<int> wholesaleMinQty = GeneratedColumn<int>('wholesale_min_qty', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _lowStockThresholdMeta = VerificationMeta('lowStockThreshold');
+  @override
+  late final GeneratedColumn<int> lowStockThreshold = GeneratedColumn<int>('low_stock_threshold', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _isActiveMeta = VerificationMeta('isActive');
+  @override
+  late final GeneratedColumn<bool> isActive = GeneratedColumn<bool>('is_active', aliasedName, false, type: DriftSqlType.bool, requiredDuringInsert: true);
+  static const VerificationMeta _descriptionMeta = VerificationMeta('description');
+  @override
+  late final GeneratedColumn<String> description = GeneratedColumn<String>('description', aliasedName, true, type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _createdAtMeta = VerificationMeta('createdAt');
+  @override
+  late final GeneratedColumn<int> createdAt = GeneratedColumn<int>('created_at', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _updatedAtMeta = VerificationMeta('updatedAt');
+  @override
+  late final GeneratedColumn<int> updatedAt = GeneratedColumn<int>('updated_at', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _createdByMeta = VerificationMeta('createdBy');
+  @override
+  late final GeneratedColumn<int> createdBy = GeneratedColumn<int>('created_by', aliasedName, true, type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _updatedByMeta = VerificationMeta('updatedBy');
+  @override
+  late final GeneratedColumn<int> updatedBy = GeneratedColumn<int>('updated_by', aliasedName, true, type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _isDeletedMeta = VerificationMeta('isDeleted');
+  @override
+  late final GeneratedColumn<bool> isDeleted = GeneratedColumn<bool>('is_deleted', aliasedName, false, type: DriftSqlType.bool, requiredDuringInsert: true);
+  static const VerificationMeta _deletedAtMeta = VerificationMeta('deletedAt');
+  @override
+  late final GeneratedColumn<int> deletedAt = GeneratedColumn<int>('deleted_at', aliasedName, true, type: DriftSqlType.int, requiredDuringInsert: false);
+  @override
+  List<GeneratedColumn> get $columns => [id, name, productCode, categoryId, brandId, subCategory, fabric, fit, sleeve, neck, hsnCode, purchasePricePaise, wholesalePricePaise, retailPricePaise, minSellingPricePaise, mrpPaise, taxRateBasisPoints, wholesaleMinQty, lowStockThreshold, isActive, description, createdAt, updatedAt, createdBy, updatedBy, isDeleted, deletedAt];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'products';
+  @override
+  VerificationContext validateIntegrity(Insertable<Product> instance, {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('name')) {
+      context.handle(_nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('product_code')) {
+      context.handle(_productCodeMeta, productCode.isAcceptableOrUnknown(data['product_code']!, _productCodeMeta));
+    } else if (isInserting) {
+      context.missing(_productCodeMeta);
+    }
+    if (data.containsKey('category_id')) {
+      context.handle(_categoryIdMeta, categoryId.isAcceptableOrUnknown(data['category_id']!, _categoryIdMeta));
+    }
+    if (data.containsKey('brand_id')) {
+      context.handle(_brandIdMeta, brandId.isAcceptableOrUnknown(data['brand_id']!, _brandIdMeta));
+    }
+    if (data.containsKey('sub_category')) {
+      context.handle(_subCategoryMeta, subCategory.isAcceptableOrUnknown(data['sub_category']!, _subCategoryMeta));
+    }
+    if (data.containsKey('fabric')) {
+      context.handle(_fabricMeta, fabric.isAcceptableOrUnknown(data['fabric']!, _fabricMeta));
+    }
+    if (data.containsKey('fit')) {
+      context.handle(_fitMeta, fit.isAcceptableOrUnknown(data['fit']!, _fitMeta));
+    }
+    if (data.containsKey('sleeve')) {
+      context.handle(_sleeveMeta, sleeve.isAcceptableOrUnknown(data['sleeve']!, _sleeveMeta));
+    }
+    if (data.containsKey('neck')) {
+      context.handle(_neckMeta, neck.isAcceptableOrUnknown(data['neck']!, _neckMeta));
+    }
+    if (data.containsKey('hsn_code')) {
+      context.handle(_hsnCodeMeta, hsnCode.isAcceptableOrUnknown(data['hsn_code']!, _hsnCodeMeta));
+    }
+    if (data.containsKey('purchase_price_paise')) {
+      context.handle(_purchasePricePaiseMeta, purchasePricePaise.isAcceptableOrUnknown(data['purchase_price_paise']!, _purchasePricePaiseMeta));
+    } else if (isInserting) {
+      context.missing(_purchasePricePaiseMeta);
+    }
+    if (data.containsKey('wholesale_price_paise')) {
+      context.handle(_wholesalePricePaiseMeta, wholesalePricePaise.isAcceptableOrUnknown(data['wholesale_price_paise']!, _wholesalePricePaiseMeta));
+    } else if (isInserting) {
+      context.missing(_wholesalePricePaiseMeta);
+    }
+    if (data.containsKey('retail_price_paise')) {
+      context.handle(_retailPricePaiseMeta, retailPricePaise.isAcceptableOrUnknown(data['retail_price_paise']!, _retailPricePaiseMeta));
+    }
+    if (data.containsKey('min_selling_price_paise')) {
+      context.handle(_minSellingPricePaiseMeta, minSellingPricePaise.isAcceptableOrUnknown(data['min_selling_price_paise']!, _minSellingPricePaiseMeta));
+    } else if (isInserting) {
+      context.missing(_minSellingPricePaiseMeta);
+    }
+    if (data.containsKey('mrp_paise')) {
+      context.handle(_mrpPaiseMeta, mrpPaise.isAcceptableOrUnknown(data['mrp_paise']!, _mrpPaiseMeta));
+    }
+    if (data.containsKey('tax_rate_basis_points')) {
+      context.handle(_taxRateBasisPointsMeta, taxRateBasisPoints.isAcceptableOrUnknown(data['tax_rate_basis_points']!, _taxRateBasisPointsMeta));
+    } else if (isInserting) {
+      context.missing(_taxRateBasisPointsMeta);
+    }
+    if (data.containsKey('wholesale_min_qty')) {
+      context.handle(_wholesaleMinQtyMeta, wholesaleMinQty.isAcceptableOrUnknown(data['wholesale_min_qty']!, _wholesaleMinQtyMeta));
+    } else if (isInserting) {
+      context.missing(_wholesaleMinQtyMeta);
+    }
+    if (data.containsKey('low_stock_threshold')) {
+      context.handle(_lowStockThresholdMeta, lowStockThreshold.isAcceptableOrUnknown(data['low_stock_threshold']!, _lowStockThresholdMeta));
+    } else if (isInserting) {
+      context.missing(_lowStockThresholdMeta);
+    }
+    if (data.containsKey('is_active')) {
+      context.handle(_isActiveMeta, isActive.isAcceptableOrUnknown(data['is_active']!, _isActiveMeta));
+    } else if (isInserting) {
+      context.missing(_isActiveMeta);
+    }
+    if (data.containsKey('description')) {
+      context.handle(_descriptionMeta, description.isAcceptableOrUnknown(data['description']!, _descriptionMeta));
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(_createdAtMeta, createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(_updatedAtMeta, updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta));
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    if (data.containsKey('created_by')) {
+      context.handle(_createdByMeta, createdBy.isAcceptableOrUnknown(data['created_by']!, _createdByMeta));
+    }
+    if (data.containsKey('updated_by')) {
+      context.handle(_updatedByMeta, updatedBy.isAcceptableOrUnknown(data['updated_by']!, _updatedByMeta));
+    }
+    if (data.containsKey('is_deleted')) {
+      context.handle(_isDeletedMeta, isDeleted.isAcceptableOrUnknown(data['is_deleted']!, _isDeletedMeta));
+    } else if (isInserting) {
+      context.missing(_isDeletedMeta);
+    }
+    if (data.containsKey('deleted_at')) {
+      context.handle(_deletedAtMeta, deletedAt.isAcceptableOrUnknown(data['deleted_at']!, _deletedAtMeta));
+    }
+    return context;
+  }
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  Product map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Product(
+      id: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      name: attachedDatabase.typeMapping.read(DriftSqlType.string, data['${effectivePrefix}name'])!,
+      productCode: attachedDatabase.typeMapping.read(DriftSqlType.string, data['${effectivePrefix}product_code'])!,
+      categoryId: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}category_id']),
+      brandId: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}brand_id']),
+      subCategory: attachedDatabase.typeMapping.read(DriftSqlType.string, data['${effectivePrefix}sub_category']),
+      fabric: attachedDatabase.typeMapping.read(DriftSqlType.string, data['${effectivePrefix}fabric']),
+      fit: attachedDatabase.typeMapping.read(DriftSqlType.string, data['${effectivePrefix}fit']),
+      sleeve: attachedDatabase.typeMapping.read(DriftSqlType.string, data['${effectivePrefix}sleeve']),
+      neck: attachedDatabase.typeMapping.read(DriftSqlType.string, data['${effectivePrefix}neck']),
+      hsnCode: attachedDatabase.typeMapping.read(DriftSqlType.string, data['${effectivePrefix}hsn_code']),
+      purchasePricePaise: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}purchase_price_paise'])!,
+      wholesalePricePaise: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}wholesale_price_paise'])!,
+      retailPricePaise: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}retail_price_paise']),
+      minSellingPricePaise: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}min_selling_price_paise'])!,
+      mrpPaise: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}mrp_paise']),
+      taxRateBasisPoints: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}tax_rate_basis_points'])!,
+      wholesaleMinQty: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}wholesale_min_qty'])!,
+      lowStockThreshold: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}low_stock_threshold'])!,
+      isActive: attachedDatabase.typeMapping.read(DriftSqlType.bool, data['${effectivePrefix}is_active'])!,
+      description: attachedDatabase.typeMapping.read(DriftSqlType.string, data['${effectivePrefix}description']),
+      createdAt: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}created_at'])!,
+      updatedAt: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}updated_at'])!,
+      createdBy: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}created_by']),
+      updatedBy: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}updated_by']),
+      isDeleted: attachedDatabase.typeMapping.read(DriftSqlType.bool, data['${effectivePrefix}is_deleted'])!,
+      deletedAt: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}deleted_at']),
+    );
+  }
+  @override
+  $ProductsTable createAlias(String alias) {
+    return $ProductsTable(attachedDatabase, alias);
+  }
+}
+class Product extends DataClass implements Insertable<Product> {
+  final int id;
+  final String name;
+  final String productCode;
+  final int? categoryId;
+  final int? brandId;
+  final String? subCategory;
+  final String? fabric;
+  final String? fit;
+  final String? sleeve;
+  final String? neck;
+  final String? hsnCode;
+  final int purchasePricePaise;
+  final int wholesalePricePaise;
+  final int? retailPricePaise;
+  final int minSellingPricePaise;
+  final int? mrpPaise;
+  final int taxRateBasisPoints;
+  final int wholesaleMinQty;
+  final int lowStockThreshold;
+  final bool isActive;
+  final String? description;
+  final int createdAt;
+  final int updatedAt;
+  final int? createdBy;
+  final int? updatedBy;
+  final bool isDeleted;
+  final int? deletedAt;
+  const Product({required this.id, required this.name, required this.productCode, this.categoryId, this.brandId, this.subCategory, this.fabric, this.fit, this.sleeve, this.neck, this.hsnCode, required this.purchasePricePaise, required this.wholesalePricePaise, this.retailPricePaise, required this.minSellingPricePaise, this.mrpPaise, required this.taxRateBasisPoints, required this.wholesaleMinQty, required this.lowStockThreshold, required this.isActive, this.description, required this.createdAt, required this.updatedAt, this.createdBy, this.updatedBy, required this.isDeleted, this.deletedAt});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['name'] = Variable<String>(name);
+    map['product_code'] = Variable<String>(productCode);
+    if (!nullToAbsent || categoryId != null) {
+      map['category_id'] = Variable<int>(categoryId);
+    }
+    if (!nullToAbsent || brandId != null) {
+      map['brand_id'] = Variable<int>(brandId);
+    }
+    if (!nullToAbsent || subCategory != null) {
+      map['sub_category'] = Variable<String>(subCategory);
+    }
+    if (!nullToAbsent || fabric != null) {
+      map['fabric'] = Variable<String>(fabric);
+    }
+    if (!nullToAbsent || fit != null) {
+      map['fit'] = Variable<String>(fit);
+    }
+    if (!nullToAbsent || sleeve != null) {
+      map['sleeve'] = Variable<String>(sleeve);
+    }
+    if (!nullToAbsent || neck != null) {
+      map['neck'] = Variable<String>(neck);
+    }
+    if (!nullToAbsent || hsnCode != null) {
+      map['hsn_code'] = Variable<String>(hsnCode);
+    }
+    map['purchase_price_paise'] = Variable<int>(purchasePricePaise);
+    map['wholesale_price_paise'] = Variable<int>(wholesalePricePaise);
+    if (!nullToAbsent || retailPricePaise != null) {
+      map['retail_price_paise'] = Variable<int>(retailPricePaise);
+    }
+    map['min_selling_price_paise'] = Variable<int>(minSellingPricePaise);
+    if (!nullToAbsent || mrpPaise != null) {
+      map['mrp_paise'] = Variable<int>(mrpPaise);
+    }
+    map['tax_rate_basis_points'] = Variable<int>(taxRateBasisPoints);
+    map['wholesale_min_qty'] = Variable<int>(wholesaleMinQty);
+    map['low_stock_threshold'] = Variable<int>(lowStockThreshold);
+    map['is_active'] = Variable<bool>(isActive);
+    if (!nullToAbsent || description != null) {
+      map['description'] = Variable<String>(description);
+    }
+    map['created_at'] = Variable<int>(createdAt);
+    map['updated_at'] = Variable<int>(updatedAt);
+    if (!nullToAbsent || createdBy != null) {
+      map['created_by'] = Variable<int>(createdBy);
+    }
+    if (!nullToAbsent || updatedBy != null) {
+      map['updated_by'] = Variable<int>(updatedBy);
+    }
+    map['is_deleted'] = Variable<bool>(isDeleted);
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<int>(deletedAt);
+    }
+    return map;
+  }
+  ProductsCompanion toCompanion(bool nullToAbsent) {
+    return ProductsCompanion(
+      id: Value(id),
+      name: Value(name),
+      productCode: Value(productCode),
+      categoryId: categoryId == null && nullToAbsent ? const Value.absent() : Value(categoryId),
+      brandId: brandId == null && nullToAbsent ? const Value.absent() : Value(brandId),
+      subCategory: subCategory == null && nullToAbsent ? const Value.absent() : Value(subCategory),
+      fabric: fabric == null && nullToAbsent ? const Value.absent() : Value(fabric),
+      fit: fit == null && nullToAbsent ? const Value.absent() : Value(fit),
+      sleeve: sleeve == null && nullToAbsent ? const Value.absent() : Value(sleeve),
+      neck: neck == null && nullToAbsent ? const Value.absent() : Value(neck),
+      hsnCode: hsnCode == null && nullToAbsent ? const Value.absent() : Value(hsnCode),
+      purchasePricePaise: Value(purchasePricePaise),
+      wholesalePricePaise: Value(wholesalePricePaise),
+      retailPricePaise: retailPricePaise == null && nullToAbsent ? const Value.absent() : Value(retailPricePaise),
+      minSellingPricePaise: Value(minSellingPricePaise),
+      mrpPaise: mrpPaise == null && nullToAbsent ? const Value.absent() : Value(mrpPaise),
+      taxRateBasisPoints: Value(taxRateBasisPoints),
+      wholesaleMinQty: Value(wholesaleMinQty),
+      lowStockThreshold: Value(lowStockThreshold),
+      isActive: Value(isActive),
+      description: description == null && nullToAbsent ? const Value.absent() : Value(description),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      createdBy: createdBy == null && nullToAbsent ? const Value.absent() : Value(createdBy),
+      updatedBy: updatedBy == null && nullToAbsent ? const Value.absent() : Value(updatedBy),
+      isDeleted: Value(isDeleted),
+      deletedAt: deletedAt == null && nullToAbsent ? const Value.absent() : Value(deletedAt),
+    );
+  }
+  factory Product.fromMap(Map<String, dynamic> map, {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Product(
+      id: serializer.fromJson<int>(map['id']),
+      name: serializer.fromJson<String>(map['name']),
+      productCode: serializer.fromJson<String>(map['productCode']),
+      categoryId: serializer.fromJson<int?>(map['categoryId']),
+      brandId: serializer.fromJson<int?>(map['brandId']),
+      subCategory: serializer.fromJson<String?>(map['subCategory']),
+      fabric: serializer.fromJson<String?>(map['fabric']),
+      fit: serializer.fromJson<String?>(map['fit']),
+      sleeve: serializer.fromJson<String?>(map['sleeve']),
+      neck: serializer.fromJson<String?>(map['neck']),
+      hsnCode: serializer.fromJson<String?>(map['hsnCode']),
+      purchasePricePaise: serializer.fromJson<int>(map['purchasePricePaise']),
+      wholesalePricePaise: serializer.fromJson<int>(map['wholesalePricePaise']),
+      retailPricePaise: serializer.fromJson<int?>(map['retailPricePaise']),
+      minSellingPricePaise: serializer.fromJson<int>(map['minSellingPricePaise']),
+      mrpPaise: serializer.fromJson<int?>(map['mrpPaise']),
+      taxRateBasisPoints: serializer.fromJson<int>(map['taxRateBasisPoints']),
+      wholesaleMinQty: serializer.fromJson<int>(map['wholesaleMinQty']),
+      lowStockThreshold: serializer.fromJson<int>(map['lowStockThreshold']),
+      isActive: serializer.fromJson<bool>(map['isActive']),
+      description: serializer.fromJson<String?>(map['description']),
+      createdAt: serializer.fromJson<int>(map['createdAt']),
+      updatedAt: serializer.fromJson<int>(map['updatedAt']),
+      createdBy: serializer.fromJson<int?>(map['createdBy']),
+      updatedBy: serializer.fromJson<int?>(map['updatedBy']),
+      isDeleted: serializer.fromJson<bool>(map['isDeleted']),
+      deletedAt: serializer.fromJson<int?>(map['deletedAt']),
+    );
+  }
+  @override
+  String toString() {
+    return (StringBuffer('Product(')..write('id: $id, name: $name, productCode: $productCode, categoryId: $categoryId, brandId: $brandId, subCategory: $subCategory, fabric: $fabric, fit: $fit, sleeve: $sleeve, neck: $neck, hsnCode: $hsnCode, purchasePricePaise: $purchasePricePaise, wholesalePricePaise: $wholesalePricePaise, retailPricePaise: $retailPricePaise, minSellingPricePaise: $minSellingPricePaise, mrpPaise: $mrpPaise, taxRateBasisPoints: $taxRateBasisPoints, wholesaleMinQty: $wholesaleMinQty, lowStockThreshold: $lowStockThreshold, isActive: $isActive, description: $description, createdAt: $createdAt, updatedAt: $updatedAt, createdBy: $createdBy, updatedBy: $updatedBy, isDeleted: $isDeleted, deletedAt: $deletedAt')..write(')')).toString();
+  }
+  @override
+  int get hashCode => Object.hash(id, name, productCode, categoryId, brandId, subCategory, fabric, fit, sleeve, neck, hsnCode, purchasePricePaise, wholesalePricePaise, retailPricePaise, minSellingPricePaise, mrpPaise, taxRateBasisPoints, wholesaleMinQty, lowStockThreshold, isActive, description, createdAt, updatedAt, createdBy, updatedBy, isDeleted, deletedAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) || (other is Product && other.id == id && other.name == name && other.productCode == productCode && other.categoryId == categoryId && other.brandId == brandId && other.subCategory == subCategory && other.fabric == fabric && other.fit == fit && other.sleeve == sleeve && other.neck == neck && other.hsnCode == hsnCode && other.purchasePricePaise == purchasePricePaise && other.wholesalePricePaise == wholesalePricePaise && other.retailPricePaise == retailPricePaise && other.minSellingPricePaise == minSellingPricePaise && other.mrpPaise == mrpPaise && other.taxRateBasisPoints == taxRateBasisPoints && other.wholesaleMinQty == wholesaleMinQty && other.lowStockThreshold == lowStockThreshold && other.isActive == isActive && other.description == description && other.createdAt == createdAt && other.updatedAt == updatedAt && other.createdBy == createdBy && other.updatedBy == updatedBy && other.isDeleted == isDeleted && other.deletedAt == deletedAt);
+  Product copyWith({int? id, String? name, String? productCode, int? categoryId, int? brandId, String? subCategory, String? fabric, String? fit, String? sleeve, String? neck, String? hsnCode, int? purchasePricePaise, int? wholesalePricePaise, int? retailPricePaise, int? minSellingPricePaise, int? mrpPaise, int? taxRateBasisPoints, int? wholesaleMinQty, int? lowStockThreshold, bool? isActive, String? description, int? createdAt, int? updatedAt, int? createdBy, int? updatedBy, bool? isDeleted, int? deletedAt}) {
+    return Product(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      productCode: productCode ?? this.productCode,
+      categoryId: categoryId ?? this.categoryId,
+      brandId: brandId ?? this.brandId,
+      subCategory: subCategory ?? this.subCategory,
+      fabric: fabric ?? this.fabric,
+      fit: fit ?? this.fit,
+      sleeve: sleeve ?? this.sleeve,
+      neck: neck ?? this.neck,
+      hsnCode: hsnCode ?? this.hsnCode,
+      purchasePricePaise: purchasePricePaise ?? this.purchasePricePaise,
+      wholesalePricePaise: wholesalePricePaise ?? this.wholesalePricePaise,
+      retailPricePaise: retailPricePaise ?? this.retailPricePaise,
+      minSellingPricePaise: minSellingPricePaise ?? this.minSellingPricePaise,
+      mrpPaise: mrpPaise ?? this.mrpPaise,
+      taxRateBasisPoints: taxRateBasisPoints ?? this.taxRateBasisPoints,
+      wholesaleMinQty: wholesaleMinQty ?? this.wholesaleMinQty,
+      lowStockThreshold: lowStockThreshold ?? this.lowStockThreshold,
+      isActive: isActive ?? this.isActive,
+      description: description ?? this.description,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      createdBy: createdBy ?? this.createdBy,
+      updatedBy: updatedBy ?? this.updatedBy,
+      isDeleted: isDeleted ?? this.isDeleted,
+      deletedAt: deletedAt ?? this.deletedAt,
+    );
+  }
+}
+class ProductsCompanion extends UpdateCompanion<Product> {
+  final Value<int> id;
+  final Value<String> name;
+  final Value<String> productCode;
+  final Value<int?> categoryId;
+  final Value<int?> brandId;
+  final Value<String?> subCategory;
+  final Value<String?> fabric;
+  final Value<String?> fit;
+  final Value<String?> sleeve;
+  final Value<String?> neck;
+  final Value<String?> hsnCode;
+  final Value<int> purchasePricePaise;
+  final Value<int> wholesalePricePaise;
+  final Value<int?> retailPricePaise;
+  final Value<int> minSellingPricePaise;
+  final Value<int?> mrpPaise;
+  final Value<int> taxRateBasisPoints;
+  final Value<int> wholesaleMinQty;
+  final Value<int> lowStockThreshold;
+  final Value<bool> isActive;
+  final Value<String?> description;
+  final Value<int> createdAt;
+  final Value<int> updatedAt;
+  final Value<int?> createdBy;
+  final Value<int?> updatedBy;
+  final Value<bool> isDeleted;
+  final Value<int?> deletedAt;
+  final Value<int> rowid;
+  const ProductsCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.productCode = const Value.absent(),
+    this.categoryId = const Value.absent(),
+    this.brandId = const Value.absent(),
+    this.subCategory = const Value.absent(),
+    this.fabric = const Value.absent(),
+    this.fit = const Value.absent(),
+    this.sleeve = const Value.absent(),
+    this.neck = const Value.absent(),
+    this.hsnCode = const Value.absent(),
+    this.purchasePricePaise = const Value.absent(),
+    this.wholesalePricePaise = const Value.absent(),
+    this.retailPricePaise = const Value.absent(),
+    this.minSellingPricePaise = const Value.absent(),
+    this.mrpPaise = const Value.absent(),
+    this.taxRateBasisPoints = const Value.absent(),
+    this.wholesaleMinQty = const Value.absent(),
+    this.lowStockThreshold = const Value.absent(),
+    this.isActive = const Value.absent(),
+    this.description = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.createdBy = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ProductsCompanion.insert({
+    this.id = const Value.absent(),
+    required String name,
+    required String productCode,
+    this.categoryId = const Value.absent(),
+    this.brandId = const Value.absent(),
+    this.subCategory = const Value.absent(),
+    this.fabric = const Value.absent(),
+    this.fit = const Value.absent(),
+    this.sleeve = const Value.absent(),
+    this.neck = const Value.absent(),
+    this.hsnCode = const Value.absent(),
+    required int purchasePricePaise,
+    required int wholesalePricePaise,
+    this.retailPricePaise = const Value.absent(),
+    required int minSellingPricePaise,
+    this.mrpPaise = const Value.absent(),
+    required int taxRateBasisPoints,
+    required int wholesaleMinQty,
+    required int lowStockThreshold,
+    required bool isActive,
+    this.description = const Value.absent(),
+    required int createdAt,
+    required int updatedAt,
+    this.createdBy = const Value.absent(),
+    this.updatedBy = const Value.absent(),
+    required bool isDeleted,
+    this.deletedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : name = Value(name), productCode = Value(productCode), purchasePricePaise = Value(purchasePricePaise), wholesalePricePaise = Value(wholesalePricePaise), minSellingPricePaise = Value(minSellingPricePaise), taxRateBasisPoints = Value(taxRateBasisPoints), wholesaleMinQty = Value(wholesaleMinQty), lowStockThreshold = Value(lowStockThreshold), isActive = Value(isActive), createdAt = Value(createdAt), updatedAt = Value(updatedAt), isDeleted = Value(isDeleted);
+  static Insertable<Product> custom({
+    Expression<int>? id,
+    Expression<String>? name,
+    Expression<String>? productCode,
+    Expression<int>? categoryId,
+    Expression<int>? brandId,
+    Expression<String>? subCategory,
+    Expression<String>? fabric,
+    Expression<String>? fit,
+    Expression<String>? sleeve,
+    Expression<String>? neck,
+    Expression<String>? hsnCode,
+    Expression<int>? purchasePricePaise,
+    Expression<int>? wholesalePricePaise,
+    Expression<int>? retailPricePaise,
+    Expression<int>? minSellingPricePaise,
+    Expression<int>? mrpPaise,
+    Expression<int>? taxRateBasisPoints,
+    Expression<int>? wholesaleMinQty,
+    Expression<int>? lowStockThreshold,
+    Expression<bool>? isActive,
+    Expression<String>? description,
+    Expression<int>? createdAt,
+    Expression<int>? updatedAt,
+    Expression<int>? createdBy,
+    Expression<int>? updatedBy,
+    Expression<bool>? isDeleted,
+    Expression<int>? deletedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (productCode != null) 'product_code': productCode,
+      if (categoryId != null) 'category_id': categoryId,
+      if (brandId != null) 'brand_id': brandId,
+      if (subCategory != null) 'sub_category': subCategory,
+      if (fabric != null) 'fabric': fabric,
+      if (fit != null) 'fit': fit,
+      if (sleeve != null) 'sleeve': sleeve,
+      if (neck != null) 'neck': neck,
+      if (hsnCode != null) 'hsn_code': hsnCode,
+      if (purchasePricePaise != null) 'purchase_price_paise': purchasePricePaise,
+      if (wholesalePricePaise != null) 'wholesale_price_paise': wholesalePricePaise,
+      if (retailPricePaise != null) 'retail_price_paise': retailPricePaise,
+      if (minSellingPricePaise != null) 'min_selling_price_paise': minSellingPricePaise,
+      if (mrpPaise != null) 'mrp_paise': mrpPaise,
+      if (taxRateBasisPoints != null) 'tax_rate_basis_points': taxRateBasisPoints,
+      if (wholesaleMinQty != null) 'wholesale_min_qty': wholesaleMinQty,
+      if (lowStockThreshold != null) 'low_stock_threshold': lowStockThreshold,
+      if (isActive != null) 'is_active': isActive,
+      if (description != null) 'description': description,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (createdBy != null) 'created_by': createdBy,
+      if (updatedBy != null) 'updated_by': updatedBy,
+      if (isDeleted != null) 'is_deleted': isDeleted,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+  ProductsCompanion copyWith({
+    Value<int>? id,
+    Value<String>? name,
+    Value<String>? productCode,
+    Value<int?>? categoryId,
+    Value<int?>? brandId,
+    Value<String?>? subCategory,
+    Value<String?>? fabric,
+    Value<String?>? fit,
+    Value<String?>? sleeve,
+    Value<String?>? neck,
+    Value<String?>? hsnCode,
+    Value<int>? purchasePricePaise,
+    Value<int>? wholesalePricePaise,
+    Value<int?>? retailPricePaise,
+    Value<int>? minSellingPricePaise,
+    Value<int?>? mrpPaise,
+    Value<int>? taxRateBasisPoints,
+    Value<int>? wholesaleMinQty,
+    Value<int>? lowStockThreshold,
+    Value<bool>? isActive,
+    Value<String?>? description,
+    Value<int>? createdAt,
+    Value<int>? updatedAt,
+    Value<int?>? createdBy,
+    Value<int?>? updatedBy,
+    Value<bool>? isDeleted,
+    Value<int?>? deletedAt,
+    Value<int>? rowid,
+  }) {
+    return ProductsCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      productCode: productCode ?? this.productCode,
+      categoryId: categoryId ?? this.categoryId,
+      brandId: brandId ?? this.brandId,
+      subCategory: subCategory ?? this.subCategory,
+      fabric: fabric ?? this.fabric,
+      fit: fit ?? this.fit,
+      sleeve: sleeve ?? this.sleeve,
+      neck: neck ?? this.neck,
+      hsnCode: hsnCode ?? this.hsnCode,
+      purchasePricePaise: purchasePricePaise ?? this.purchasePricePaise,
+      wholesalePricePaise: wholesalePricePaise ?? this.wholesalePricePaise,
+      retailPricePaise: retailPricePaise ?? this.retailPricePaise,
+      minSellingPricePaise: minSellingPricePaise ?? this.minSellingPricePaise,
+      mrpPaise: mrpPaise ?? this.mrpPaise,
+      taxRateBasisPoints: taxRateBasisPoints ?? this.taxRateBasisPoints,
+      wholesaleMinQty: wholesaleMinQty ?? this.wholesaleMinQty,
+      lowStockThreshold: lowStockThreshold ?? this.lowStockThreshold,
+      isActive: isActive ?? this.isActive,
+      description: description ?? this.description,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      createdBy: createdBy ?? this.createdBy,
+      updatedBy: updatedBy ?? this.updatedBy,
+      isDeleted: isDeleted ?? this.isDeleted,
+      deletedAt: deletedAt ?? this.deletedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (productCode.present) {
+      map['product_code'] = Variable<String>(productCode.value);
+    }
+    if (categoryId.present) {
+      map['category_id'] = Variable<int>(categoryId.value);
+    }
+    if (brandId.present) {
+      map['brand_id'] = Variable<int>(brandId.value);
+    }
+    if (subCategory.present) {
+      map['sub_category'] = Variable<String>(subCategory.value);
+    }
+    if (fabric.present) {
+      map['fabric'] = Variable<String>(fabric.value);
+    }
+    if (fit.present) {
+      map['fit'] = Variable<String>(fit.value);
+    }
+    if (sleeve.present) {
+      map['sleeve'] = Variable<String>(sleeve.value);
+    }
+    if (neck.present) {
+      map['neck'] = Variable<String>(neck.value);
+    }
+    if (hsnCode.present) {
+      map['hsn_code'] = Variable<String>(hsnCode.value);
+    }
+    if (purchasePricePaise.present) {
+      map['purchase_price_paise'] = Variable<int>(purchasePricePaise.value);
+    }
+    if (wholesalePricePaise.present) {
+      map['wholesale_price_paise'] = Variable<int>(wholesalePricePaise.value);
+    }
+    if (retailPricePaise.present) {
+      map['retail_price_paise'] = Variable<int>(retailPricePaise.value);
+    }
+    if (minSellingPricePaise.present) {
+      map['min_selling_price_paise'] = Variable<int>(minSellingPricePaise.value);
+    }
+    if (mrpPaise.present) {
+      map['mrp_paise'] = Variable<int>(mrpPaise.value);
+    }
+    if (taxRateBasisPoints.present) {
+      map['tax_rate_basis_points'] = Variable<int>(taxRateBasisPoints.value);
+    }
+    if (wholesaleMinQty.present) {
+      map['wholesale_min_qty'] = Variable<int>(wholesaleMinQty.value);
+    }
+    if (lowStockThreshold.present) {
+      map['low_stock_threshold'] = Variable<int>(lowStockThreshold.value);
+    }
+    if (isActive.present) {
+      map['is_active'] = Variable<bool>(isActive.value);
+    }
+    if (description.present) {
+      map['description'] = Variable<String>(description.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<int>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<int>(updatedAt.value);
+    }
+    if (createdBy.present) {
+      map['created_by'] = Variable<int>(createdBy.value);
+    }
+    if (updatedBy.present) {
+      map['updated_by'] = Variable<int>(updatedBy.value);
+    }
+    if (isDeleted.present) {
+      map['is_deleted'] = Variable<bool>(isDeleted.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<int>(deletedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+  @override
+  String toString() {
+    return (StringBuffer('ProductsCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('productCode: $productCode, ')
+          ..write('categoryId: $categoryId, ')
+          ..write('brandId: $brandId, ')
+          ..write('subCategory: $subCategory, ')
+          ..write('fabric: $fabric, ')
+          ..write('fit: $fit, ')
+          ..write('sleeve: $sleeve, ')
+          ..write('neck: $neck, ')
+          ..write('hsnCode: $hsnCode, ')
+          ..write('purchasePricePaise: $purchasePricePaise, ')
+          ..write('wholesalePricePaise: $wholesalePricePaise, ')
+          ..write('retailPricePaise: $retailPricePaise, ')
+          ..write('minSellingPricePaise: $minSellingPricePaise, ')
+          ..write('mrpPaise: $mrpPaise, ')
+          ..write('taxRateBasisPoints: $taxRateBasisPoints, ')
+          ..write('wholesaleMinQty: $wholesaleMinQty, ')
+          ..write('lowStockThreshold: $lowStockThreshold, ')
+          ..write('isActive: $isActive, ')
+          ..write('description: $description, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('createdBy: $createdBy, ')
+          ..write('updatedBy: $updatedBy, ')
+          ..write('isDeleted: $isDeleted, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ProductVariantsTable extends ProductVariants
+    with TableInfo<$ProductVariantsTable, ProductVariant> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ProductVariantsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>('id', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _productIdMeta = VerificationMeta('productId');
+  @override
+  late final GeneratedColumn<int> productId = GeneratedColumn<int>('product_id', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _sizeIdMeta = VerificationMeta('sizeId');
+  @override
+  late final GeneratedColumn<int> sizeId = GeneratedColumn<int>('size_id', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _colorIdMeta = VerificationMeta('colorId');
+  @override
+  late final GeneratedColumn<int> colorId = GeneratedColumn<int>('color_id', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _barcodeMeta = VerificationMeta('barcode');
+  @override
+  late final GeneratedColumn<String> barcode = GeneratedColumn<String>('barcode', aliasedName, false, type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _stockQuantityMeta = VerificationMeta('stockQuantity');
+  @override
+  late final GeneratedColumn<int> stockQuantity = GeneratedColumn<int>('stock_quantity', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _createdAtMeta = VerificationMeta('createdAt');
+  @override
+  late final GeneratedColumn<int> createdAt = GeneratedColumn<int>('created_at', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _updatedAtMeta = VerificationMeta('updatedAt');
+  @override
+  late final GeneratedColumn<int> updatedAt = GeneratedColumn<int>('updated_at', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [id, productId, sizeId, colorId, barcode, stockQuantity, createdAt, updatedAt];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'product_variants';
+  @override
+  VerificationContext validateIntegrity(Insertable<ProductVariant> instance, {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('product_id')) {
+      context.handle(_productIdMeta, productId.isAcceptableOrUnknown(data['product_id']!, _productIdMeta));
+    } else if (isInserting) {
+      context.missing(_productIdMeta);
+    }
+    if (data.containsKey('size_id')) {
+      context.handle(_sizeIdMeta, sizeId.isAcceptableOrUnknown(data['size_id']!, _sizeIdMeta));
+    } else if (isInserting) {
+      context.missing(_sizeIdMeta);
+    }
+    if (data.containsKey('color_id')) {
+      context.handle(_colorIdMeta, colorId.isAcceptableOrUnknown(data['color_id']!, _colorIdMeta));
+    } else if (isInserting) {
+      context.missing(_colorIdMeta);
+    }
+    if (data.containsKey('barcode')) {
+      context.handle(_barcodeMeta, barcode.isAcceptableOrUnknown(data['barcode']!, _barcodeMeta));
+    } else if (isInserting) {
+      context.missing(_barcodeMeta);
+    }
+    if (data.containsKey('stock_quantity')) {
+      context.handle(_stockQuantityMeta, stockQuantity.isAcceptableOrUnknown(data['stock_quantity']!, _stockQuantityMeta));
+    } else if (isInserting) {
+      context.missing(_stockQuantityMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(_createdAtMeta, createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(_updatedAtMeta, updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta));
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    return context;
+  }
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ProductVariant map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ProductVariant(
+      id: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      productId: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}product_id'])!,
+      sizeId: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}size_id'])!,
+      colorId: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}color_id'])!,
+      barcode: attachedDatabase.typeMapping.read(DriftSqlType.string, data['${effectivePrefix}barcode'])!,
+      stockQuantity: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}stock_quantity'])!,
+      createdAt: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}created_at'])!,
+      updatedAt: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}updated_at'])!,
+    );
+  }
+  @override
+  $ProductVariantsTable createAlias(String alias) {
+    return $ProductVariantsTable(attachedDatabase, alias);
+  }
+}
+class ProductVariant extends DataClass implements Insertable<ProductVariant> {
+  final int id;
+  final int productId;
+  final int sizeId;
+  final int colorId;
+  final String barcode;
+  final int stockQuantity;
+  final int createdAt;
+  final int updatedAt;
+  const ProductVariant({required this.id, required this.productId, required this.sizeId, required this.colorId, required this.barcode, required this.stockQuantity, required this.createdAt, required this.updatedAt});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['product_id'] = Variable<int>(productId);
+    map['size_id'] = Variable<int>(sizeId);
+    map['color_id'] = Variable<int>(colorId);
+    map['barcode'] = Variable<String>(barcode);
+    map['stock_quantity'] = Variable<int>(stockQuantity);
+    map['created_at'] = Variable<int>(createdAt);
+    map['updated_at'] = Variable<int>(updatedAt);
+    return map;
+  }
+  ProductVariantsCompanion toCompanion(bool nullToAbsent) {
+    return ProductVariantsCompanion(
+      id: Value(id),
+      productId: Value(productId),
+      sizeId: Value(sizeId),
+      colorId: Value(colorId),
+      barcode: Value(barcode),
+      stockQuantity: Value(stockQuantity),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+    );
+  }
+  factory ProductVariant.fromMap(Map<String, dynamic> map, {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ProductVariant(
+      id: serializer.fromJson<int>(map['id']),
+      productId: serializer.fromJson<int>(map['productId']),
+      sizeId: serializer.fromJson<int>(map['sizeId']),
+      colorId: serializer.fromJson<int>(map['colorId']),
+      barcode: serializer.fromJson<String>(map['barcode']),
+      stockQuantity: serializer.fromJson<int>(map['stockQuantity']),
+      createdAt: serializer.fromJson<int>(map['createdAt']),
+      updatedAt: serializer.fromJson<int>(map['updatedAt']),
+    );
+  }
+  @override
+  String toString() {
+    return (StringBuffer('ProductVariant(')..write('id: $id, productId: $productId, sizeId: $sizeId, colorId: $colorId, barcode: $barcode, stockQuantity: $stockQuantity, createdAt: $createdAt, updatedAt: $updatedAt')..write(')')).toString();
+  }
+  @override
+  int get hashCode => Object.hash(id, productId, sizeId, colorId, barcode, stockQuantity, createdAt, updatedAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) || (other is ProductVariant && other.id == id && other.productId == productId && other.sizeId == sizeId && other.colorId == colorId && other.barcode == barcode && other.stockQuantity == stockQuantity && other.createdAt == createdAt && other.updatedAt == updatedAt);
+  ProductVariant copyWith({int? id, int? productId, int? sizeId, int? colorId, String? barcode, int? stockQuantity, int? createdAt, int? updatedAt}) {
+    return ProductVariant(
+      id: id ?? this.id,
+      productId: productId ?? this.productId,
+      sizeId: sizeId ?? this.sizeId,
+      colorId: colorId ?? this.colorId,
+      barcode: barcode ?? this.barcode,
+      stockQuantity: stockQuantity ?? this.stockQuantity,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+    );
+  }
+}
+class ProductVariantsCompanion extends UpdateCompanion<ProductVariant> {
+  final Value<int> id;
+  final Value<int> productId;
+  final Value<int> sizeId;
+  final Value<int> colorId;
+  final Value<String> barcode;
+  final Value<int> stockQuantity;
+  final Value<int> createdAt;
+  final Value<int> updatedAt;
+  final Value<int> rowid;
+  const ProductVariantsCompanion({
+    this.id = const Value.absent(),
+    this.productId = const Value.absent(),
+    this.sizeId = const Value.absent(),
+    this.colorId = const Value.absent(),
+    this.barcode = const Value.absent(),
+    this.stockQuantity = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ProductVariantsCompanion.insert({
+    this.id = const Value.absent(),
+    required int productId,
+    required int sizeId,
+    required int colorId,
+    required String barcode,
+    required int stockQuantity,
+    required int createdAt,
+    required int updatedAt,
+    this.rowid = const Value.absent(),
+  }) : productId = Value(productId), sizeId = Value(sizeId), colorId = Value(colorId), barcode = Value(barcode), stockQuantity = Value(stockQuantity), createdAt = Value(createdAt), updatedAt = Value(updatedAt);
+  static Insertable<ProductVariant> custom({
+    Expression<int>? id,
+    Expression<int>? productId,
+    Expression<int>? sizeId,
+    Expression<int>? colorId,
+    Expression<String>? barcode,
+    Expression<int>? stockQuantity,
+    Expression<int>? createdAt,
+    Expression<int>? updatedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (productId != null) 'product_id': productId,
+      if (sizeId != null) 'size_id': sizeId,
+      if (colorId != null) 'color_id': colorId,
+      if (barcode != null) 'barcode': barcode,
+      if (stockQuantity != null) 'stock_quantity': stockQuantity,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+  ProductVariantsCompanion copyWith({
+    Value<int>? id,
+    Value<int>? productId,
+    Value<int>? sizeId,
+    Value<int>? colorId,
+    Value<String>? barcode,
+    Value<int>? stockQuantity,
+    Value<int>? createdAt,
+    Value<int>? updatedAt,
+    Value<int>? rowid,
+  }) {
+    return ProductVariantsCompanion(
+      id: id ?? this.id,
+      productId: productId ?? this.productId,
+      sizeId: sizeId ?? this.sizeId,
+      colorId: colorId ?? this.colorId,
+      barcode: barcode ?? this.barcode,
+      stockQuantity: stockQuantity ?? this.stockQuantity,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (productId.present) {
+      map['product_id'] = Variable<int>(productId.value);
+    }
+    if (sizeId.present) {
+      map['size_id'] = Variable<int>(sizeId.value);
+    }
+    if (colorId.present) {
+      map['color_id'] = Variable<int>(colorId.value);
+    }
+    if (barcode.present) {
+      map['barcode'] = Variable<String>(barcode.value);
+    }
+    if (stockQuantity.present) {
+      map['stock_quantity'] = Variable<int>(stockQuantity.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<int>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<int>(updatedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+  @override
+  String toString() {
+    return (StringBuffer('ProductVariantsCompanion(')
+          ..write('id: $id, ')
+          ..write('productId: $productId, ')
+          ..write('sizeId: $sizeId, ')
+          ..write('colorId: $colorId, ')
+          ..write('barcode: $barcode, ')
+          ..write('stockQuantity: $stockQuantity, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $PriceTiersTable extends PriceTiers
+    with TableInfo<$PriceTiersTable, PriceTier> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $PriceTiersTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>('id', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _productIdMeta = VerificationMeta('productId');
+  @override
+  late final GeneratedColumn<int> productId = GeneratedColumn<int>('product_id', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _minQuantityMeta = VerificationMeta('minQuantity');
+  @override
+  late final GeneratedColumn<int> minQuantity = GeneratedColumn<int>('min_quantity', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _pricePaiseMeta = VerificationMeta('pricePaise');
+  @override
+  late final GeneratedColumn<int> pricePaise = GeneratedColumn<int>('price_paise', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _createdAtMeta = VerificationMeta('createdAt');
+  @override
+  late final GeneratedColumn<int> createdAt = GeneratedColumn<int>('created_at', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _updatedAtMeta = VerificationMeta('updatedAt');
+  @override
+  late final GeneratedColumn<int> updatedAt = GeneratedColumn<int>('updated_at', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [id, productId, minQuantity, pricePaise, createdAt, updatedAt];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'price_tiers';
+  @override
+  VerificationContext validateIntegrity(Insertable<PriceTier> instance, {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('product_id')) {
+      context.handle(_productIdMeta, productId.isAcceptableOrUnknown(data['product_id']!, _productIdMeta));
+    } else if (isInserting) {
+      context.missing(_productIdMeta);
+    }
+    if (data.containsKey('min_quantity')) {
+      context.handle(_minQuantityMeta, minQuantity.isAcceptableOrUnknown(data['min_quantity']!, _minQuantityMeta));
+    } else if (isInserting) {
+      context.missing(_minQuantityMeta);
+    }
+    if (data.containsKey('price_paise')) {
+      context.handle(_pricePaiseMeta, pricePaise.isAcceptableOrUnknown(data['price_paise']!, _pricePaiseMeta));
+    } else if (isInserting) {
+      context.missing(_pricePaiseMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(_createdAtMeta, createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(_updatedAtMeta, updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta));
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    return context;
+  }
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  PriceTier map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return PriceTier(
+      id: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      productId: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}product_id'])!,
+      minQuantity: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}min_quantity'])!,
+      pricePaise: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}price_paise'])!,
+      createdAt: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}created_at'])!,
+      updatedAt: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}updated_at'])!,
+    );
+  }
+  @override
+  $PriceTiersTable createAlias(String alias) {
+    return $PriceTiersTable(attachedDatabase, alias);
+  }
+}
+class PriceTier extends DataClass implements Insertable<PriceTier> {
+  final int id;
+  final int productId;
+  final int minQuantity;
+  final int pricePaise;
+  final int createdAt;
+  final int updatedAt;
+  const PriceTier({required this.id, required this.productId, required this.minQuantity, required this.pricePaise, required this.createdAt, required this.updatedAt});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['product_id'] = Variable<int>(productId);
+    map['min_quantity'] = Variable<int>(minQuantity);
+    map['price_paise'] = Variable<int>(pricePaise);
+    map['created_at'] = Variable<int>(createdAt);
+    map['updated_at'] = Variable<int>(updatedAt);
+    return map;
+  }
+  PriceTiersCompanion toCompanion(bool nullToAbsent) {
+    return PriceTiersCompanion(
+      id: Value(id),
+      productId: Value(productId),
+      minQuantity: Value(minQuantity),
+      pricePaise: Value(pricePaise),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+    );
+  }
+  factory PriceTier.fromMap(Map<String, dynamic> map, {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return PriceTier(
+      id: serializer.fromJson<int>(map['id']),
+      productId: serializer.fromJson<int>(map['productId']),
+      minQuantity: serializer.fromJson<int>(map['minQuantity']),
+      pricePaise: serializer.fromJson<int>(map['pricePaise']),
+      createdAt: serializer.fromJson<int>(map['createdAt']),
+      updatedAt: serializer.fromJson<int>(map['updatedAt']),
+    );
+  }
+  @override
+  String toString() {
+    return (StringBuffer('PriceTier(')..write('id: $id, productId: $productId, minQuantity: $minQuantity, pricePaise: $pricePaise, createdAt: $createdAt, updatedAt: $updatedAt')..write(')')).toString();
+  }
+  @override
+  int get hashCode => Object.hash(id, productId, minQuantity, pricePaise, createdAt, updatedAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) || (other is PriceTier && other.id == id && other.productId == productId && other.minQuantity == minQuantity && other.pricePaise == pricePaise && other.createdAt == createdAt && other.updatedAt == updatedAt);
+  PriceTier copyWith({int? id, int? productId, int? minQuantity, int? pricePaise, int? createdAt, int? updatedAt}) {
+    return PriceTier(
+      id: id ?? this.id,
+      productId: productId ?? this.productId,
+      minQuantity: minQuantity ?? this.minQuantity,
+      pricePaise: pricePaise ?? this.pricePaise,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+    );
+  }
+}
+class PriceTiersCompanion extends UpdateCompanion<PriceTier> {
+  final Value<int> id;
+  final Value<int> productId;
+  final Value<int> minQuantity;
+  final Value<int> pricePaise;
+  final Value<int> createdAt;
+  final Value<int> updatedAt;
+  final Value<int> rowid;
+  const PriceTiersCompanion({
+    this.id = const Value.absent(),
+    this.productId = const Value.absent(),
+    this.minQuantity = const Value.absent(),
+    this.pricePaise = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  PriceTiersCompanion.insert({
+    this.id = const Value.absent(),
+    required int productId,
+    required int minQuantity,
+    required int pricePaise,
+    required int createdAt,
+    required int updatedAt,
+    this.rowid = const Value.absent(),
+  }) : productId = Value(productId), minQuantity = Value(minQuantity), pricePaise = Value(pricePaise), createdAt = Value(createdAt), updatedAt = Value(updatedAt);
+  static Insertable<PriceTier> custom({
+    Expression<int>? id,
+    Expression<int>? productId,
+    Expression<int>? minQuantity,
+    Expression<int>? pricePaise,
+    Expression<int>? createdAt,
+    Expression<int>? updatedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (productId != null) 'product_id': productId,
+      if (minQuantity != null) 'min_quantity': minQuantity,
+      if (pricePaise != null) 'price_paise': pricePaise,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+  PriceTiersCompanion copyWith({
+    Value<int>? id,
+    Value<int>? productId,
+    Value<int>? minQuantity,
+    Value<int>? pricePaise,
+    Value<int>? createdAt,
+    Value<int>? updatedAt,
+    Value<int>? rowid,
+  }) {
+    return PriceTiersCompanion(
+      id: id ?? this.id,
+      productId: productId ?? this.productId,
+      minQuantity: minQuantity ?? this.minQuantity,
+      pricePaise: pricePaise ?? this.pricePaise,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (productId.present) {
+      map['product_id'] = Variable<int>(productId.value);
+    }
+    if (minQuantity.present) {
+      map['min_quantity'] = Variable<int>(minQuantity.value);
+    }
+    if (pricePaise.present) {
+      map['price_paise'] = Variable<int>(pricePaise.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<int>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<int>(updatedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+  @override
+  String toString() {
+    return (StringBuffer('PriceTiersCompanion(')
+          ..write('id: $id, ')
+          ..write('productId: $productId, ')
+          ..write('minQuantity: $minQuantity, ')
+          ..write('pricePaise: $pricePaise, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ProductSetsTable extends ProductSets
+    with TableInfo<$ProductSetsTable, ProductSet> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ProductSetsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>('id', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _productIdMeta = VerificationMeta('productId');
+  @override
+  late final GeneratedColumn<int> productId = GeneratedColumn<int>('product_id', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _nameMeta = VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>('name', aliasedName, false, type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _setTypeMeta = VerificationMeta('setType');
+  @override
+  late final GeneratedColumn<String> setType = GeneratedColumn<String>('set_type', aliasedName, false, type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _createdAtMeta = VerificationMeta('createdAt');
+  @override
+  late final GeneratedColumn<int> createdAt = GeneratedColumn<int>('created_at', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _updatedAtMeta = VerificationMeta('updatedAt');
+  @override
+  late final GeneratedColumn<int> updatedAt = GeneratedColumn<int>('updated_at', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [id, productId, name, setType, createdAt, updatedAt];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'product_sets';
+  @override
+  VerificationContext validateIntegrity(Insertable<ProductSet> instance, {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('product_id')) {
+      context.handle(_productIdMeta, productId.isAcceptableOrUnknown(data['product_id']!, _productIdMeta));
+    } else if (isInserting) {
+      context.missing(_productIdMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(_nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('set_type')) {
+      context.handle(_setTypeMeta, setType.isAcceptableOrUnknown(data['set_type']!, _setTypeMeta));
+    } else if (isInserting) {
+      context.missing(_setTypeMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(_createdAtMeta, createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(_updatedAtMeta, updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta));
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    return context;
+  }
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ProductSet map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ProductSet(
+      id: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      productId: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}product_id'])!,
+      name: attachedDatabase.typeMapping.read(DriftSqlType.string, data['${effectivePrefix}name'])!,
+      setType: attachedDatabase.typeMapping.read(DriftSqlType.string, data['${effectivePrefix}set_type'])!,
+      createdAt: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}created_at'])!,
+      updatedAt: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}updated_at'])!,
+    );
+  }
+  @override
+  $ProductSetsTable createAlias(String alias) {
+    return $ProductSetsTable(attachedDatabase, alias);
+  }
+}
+class ProductSet extends DataClass implements Insertable<ProductSet> {
+  final int id;
+  final int productId;
+  final String name;
+  final String setType;
+  final int createdAt;
+  final int updatedAt;
+  const ProductSet({required this.id, required this.productId, required this.name, required this.setType, required this.createdAt, required this.updatedAt});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['product_id'] = Variable<int>(productId);
+    map['name'] = Variable<String>(name);
+    map['set_type'] = Variable<String>(setType);
+    map['created_at'] = Variable<int>(createdAt);
+    map['updated_at'] = Variable<int>(updatedAt);
+    return map;
+  }
+  ProductSetsCompanion toCompanion(bool nullToAbsent) {
+    return ProductSetsCompanion(
+      id: Value(id),
+      productId: Value(productId),
+      name: Value(name),
+      setType: Value(setType),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+    );
+  }
+  factory ProductSet.fromMap(Map<String, dynamic> map, {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ProductSet(
+      id: serializer.fromJson<int>(map['id']),
+      productId: serializer.fromJson<int>(map['productId']),
+      name: serializer.fromJson<String>(map['name']),
+      setType: serializer.fromJson<String>(map['setType']),
+      createdAt: serializer.fromJson<int>(map['createdAt']),
+      updatedAt: serializer.fromJson<int>(map['updatedAt']),
+    );
+  }
+  @override
+  String toString() {
+    return (StringBuffer('ProductSet(')..write('id: $id, productId: $productId, name: $name, setType: $setType, createdAt: $createdAt, updatedAt: $updatedAt')..write(')')).toString();
+  }
+  @override
+  int get hashCode => Object.hash(id, productId, name, setType, createdAt, updatedAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) || (other is ProductSet && other.id == id && other.productId == productId && other.name == name && other.setType == setType && other.createdAt == createdAt && other.updatedAt == updatedAt);
+  ProductSet copyWith({int? id, int? productId, String? name, String? setType, int? createdAt, int? updatedAt}) {
+    return ProductSet(
+      id: id ?? this.id,
+      productId: productId ?? this.productId,
+      name: name ?? this.name,
+      setType: setType ?? this.setType,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+    );
+  }
+}
+class ProductSetsCompanion extends UpdateCompanion<ProductSet> {
+  final Value<int> id;
+  final Value<int> productId;
+  final Value<String> name;
+  final Value<String> setType;
+  final Value<int> createdAt;
+  final Value<int> updatedAt;
+  final Value<int> rowid;
+  const ProductSetsCompanion({
+    this.id = const Value.absent(),
+    this.productId = const Value.absent(),
+    this.name = const Value.absent(),
+    this.setType = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ProductSetsCompanion.insert({
+    this.id = const Value.absent(),
+    required int productId,
+    required String name,
+    required String setType,
+    required int createdAt,
+    required int updatedAt,
+    this.rowid = const Value.absent(),
+  }) : productId = Value(productId), name = Value(name), setType = Value(setType), createdAt = Value(createdAt), updatedAt = Value(updatedAt);
+  static Insertable<ProductSet> custom({
+    Expression<int>? id,
+    Expression<int>? productId,
+    Expression<String>? name,
+    Expression<String>? setType,
+    Expression<int>? createdAt,
+    Expression<int>? updatedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (productId != null) 'product_id': productId,
+      if (name != null) 'name': name,
+      if (setType != null) 'set_type': setType,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+  ProductSetsCompanion copyWith({
+    Value<int>? id,
+    Value<int>? productId,
+    Value<String>? name,
+    Value<String>? setType,
+    Value<int>? createdAt,
+    Value<int>? updatedAt,
+    Value<int>? rowid,
+  }) {
+    return ProductSetsCompanion(
+      id: id ?? this.id,
+      productId: productId ?? this.productId,
+      name: name ?? this.name,
+      setType: setType ?? this.setType,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (productId.present) {
+      map['product_id'] = Variable<int>(productId.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (setType.present) {
+      map['set_type'] = Variable<String>(setType.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<int>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<int>(updatedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+  @override
+  String toString() {
+    return (StringBuffer('ProductSetsCompanion(')
+          ..write('id: $id, ')
+          ..write('productId: $productId, ')
+          ..write('name: $name, ')
+          ..write('setType: $setType, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ProductSetItemsTable extends ProductSetItems
+    with TableInfo<$ProductSetItemsTable, ProductSetItem> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ProductSetItemsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>('id', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _setIdMeta = VerificationMeta('setId');
+  @override
+  late final GeneratedColumn<int> setId = GeneratedColumn<int>('set_id', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _sizeIdMeta = VerificationMeta('sizeId');
+  @override
+  late final GeneratedColumn<int> sizeId = GeneratedColumn<int>('size_id', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _colorIdMeta = VerificationMeta('colorId');
+  @override
+  late final GeneratedColumn<int> colorId = GeneratedColumn<int>('color_id', aliasedName, true, type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _quantityPerSetMeta = VerificationMeta('quantityPerSet');
+  @override
+  late final GeneratedColumn<int> quantityPerSet = GeneratedColumn<int>('quantity_per_set', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _createdAtMeta = VerificationMeta('createdAt');
+  @override
+  late final GeneratedColumn<int> createdAt = GeneratedColumn<int>('created_at', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _updatedAtMeta = VerificationMeta('updatedAt');
+  @override
+  late final GeneratedColumn<int> updatedAt = GeneratedColumn<int>('updated_at', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [id, setId, sizeId, colorId, quantityPerSet, createdAt, updatedAt];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'product_set_items';
+  @override
+  VerificationContext validateIntegrity(Insertable<ProductSetItem> instance, {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('set_id')) {
+      context.handle(_setIdMeta, setId.isAcceptableOrUnknown(data['set_id']!, _setIdMeta));
+    } else if (isInserting) {
+      context.missing(_setIdMeta);
+    }
+    if (data.containsKey('size_id')) {
+      context.handle(_sizeIdMeta, sizeId.isAcceptableOrUnknown(data['size_id']!, _sizeIdMeta));
+    } else if (isInserting) {
+      context.missing(_sizeIdMeta);
+    }
+    if (data.containsKey('color_id')) {
+      context.handle(_colorIdMeta, colorId.isAcceptableOrUnknown(data['color_id']!, _colorIdMeta));
+    }
+    if (data.containsKey('quantity_per_set')) {
+      context.handle(_quantityPerSetMeta, quantityPerSet.isAcceptableOrUnknown(data['quantity_per_set']!, _quantityPerSetMeta));
+    } else if (isInserting) {
+      context.missing(_quantityPerSetMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(_createdAtMeta, createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(_updatedAtMeta, updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta));
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    return context;
+  }
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ProductSetItem map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ProductSetItem(
+      id: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      setId: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}set_id'])!,
+      sizeId: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}size_id'])!,
+      colorId: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}color_id']),
+      quantityPerSet: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}quantity_per_set'])!,
+      createdAt: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}created_at'])!,
+      updatedAt: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}updated_at'])!,
+    );
+  }
+  @override
+  $ProductSetItemsTable createAlias(String alias) {
+    return $ProductSetItemsTable(attachedDatabase, alias);
+  }
+}
+class ProductSetItem extends DataClass implements Insertable<ProductSetItem> {
+  final int id;
+  final int setId;
+  final int sizeId;
+  final int? colorId;
+  final int quantityPerSet;
+  final int createdAt;
+  final int updatedAt;
+  const ProductSetItem({required this.id, required this.setId, required this.sizeId, this.colorId, required this.quantityPerSet, required this.createdAt, required this.updatedAt});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['set_id'] = Variable<int>(setId);
+    map['size_id'] = Variable<int>(sizeId);
+    if (!nullToAbsent || colorId != null) {
+      map['color_id'] = Variable<int>(colorId);
+    }
+    map['quantity_per_set'] = Variable<int>(quantityPerSet);
+    map['created_at'] = Variable<int>(createdAt);
+    map['updated_at'] = Variable<int>(updatedAt);
+    return map;
+  }
+  ProductSetItemsCompanion toCompanion(bool nullToAbsent) {
+    return ProductSetItemsCompanion(
+      id: Value(id),
+      setId: Value(setId),
+      sizeId: Value(sizeId),
+      colorId: colorId == null && nullToAbsent ? const Value.absent() : Value(colorId),
+      quantityPerSet: Value(quantityPerSet),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+    );
+  }
+  factory ProductSetItem.fromMap(Map<String, dynamic> map, {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ProductSetItem(
+      id: serializer.fromJson<int>(map['id']),
+      setId: serializer.fromJson<int>(map['setId']),
+      sizeId: serializer.fromJson<int>(map['sizeId']),
+      colorId: serializer.fromJson<int?>(map['colorId']),
+      quantityPerSet: serializer.fromJson<int>(map['quantityPerSet']),
+      createdAt: serializer.fromJson<int>(map['createdAt']),
+      updatedAt: serializer.fromJson<int>(map['updatedAt']),
+    );
+  }
+  @override
+  String toString() {
+    return (StringBuffer('ProductSetItem(')..write('id: $id, setId: $setId, sizeId: $sizeId, colorId: $colorId, quantityPerSet: $quantityPerSet, createdAt: $createdAt, updatedAt: $updatedAt')..write(')')).toString();
+  }
+  @override
+  int get hashCode => Object.hash(id, setId, sizeId, colorId, quantityPerSet, createdAt, updatedAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) || (other is ProductSetItem && other.id == id && other.setId == setId && other.sizeId == sizeId && other.colorId == colorId && other.quantityPerSet == quantityPerSet && other.createdAt == createdAt && other.updatedAt == updatedAt);
+  ProductSetItem copyWith({int? id, int? setId, int? sizeId, int? colorId, int? quantityPerSet, int? createdAt, int? updatedAt}) {
+    return ProductSetItem(
+      id: id ?? this.id,
+      setId: setId ?? this.setId,
+      sizeId: sizeId ?? this.sizeId,
+      colorId: colorId ?? this.colorId,
+      quantityPerSet: quantityPerSet ?? this.quantityPerSet,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+    );
+  }
+}
+class ProductSetItemsCompanion extends UpdateCompanion<ProductSetItem> {
+  final Value<int> id;
+  final Value<int> setId;
+  final Value<int> sizeId;
+  final Value<int?> colorId;
+  final Value<int> quantityPerSet;
+  final Value<int> createdAt;
+  final Value<int> updatedAt;
+  final Value<int> rowid;
+  const ProductSetItemsCompanion({
+    this.id = const Value.absent(),
+    this.setId = const Value.absent(),
+    this.sizeId = const Value.absent(),
+    this.colorId = const Value.absent(),
+    this.quantityPerSet = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ProductSetItemsCompanion.insert({
+    this.id = const Value.absent(),
+    required int setId,
+    required int sizeId,
+    this.colorId = const Value.absent(),
+    required int quantityPerSet,
+    required int createdAt,
+    required int updatedAt,
+    this.rowid = const Value.absent(),
+  }) : setId = Value(setId), sizeId = Value(sizeId), quantityPerSet = Value(quantityPerSet), createdAt = Value(createdAt), updatedAt = Value(updatedAt);
+  static Insertable<ProductSetItem> custom({
+    Expression<int>? id,
+    Expression<int>? setId,
+    Expression<int>? sizeId,
+    Expression<int>? colorId,
+    Expression<int>? quantityPerSet,
+    Expression<int>? createdAt,
+    Expression<int>? updatedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (setId != null) 'set_id': setId,
+      if (sizeId != null) 'size_id': sizeId,
+      if (colorId != null) 'color_id': colorId,
+      if (quantityPerSet != null) 'quantity_per_set': quantityPerSet,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+  ProductSetItemsCompanion copyWith({
+    Value<int>? id,
+    Value<int>? setId,
+    Value<int>? sizeId,
+    Value<int?>? colorId,
+    Value<int>? quantityPerSet,
+    Value<int>? createdAt,
+    Value<int>? updatedAt,
+    Value<int>? rowid,
+  }) {
+    return ProductSetItemsCompanion(
+      id: id ?? this.id,
+      setId: setId ?? this.setId,
+      sizeId: sizeId ?? this.sizeId,
+      colorId: colorId ?? this.colorId,
+      quantityPerSet: quantityPerSet ?? this.quantityPerSet,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (setId.present) {
+      map['set_id'] = Variable<int>(setId.value);
+    }
+    if (sizeId.present) {
+      map['size_id'] = Variable<int>(sizeId.value);
+    }
+    if (colorId.present) {
+      map['color_id'] = Variable<int>(colorId.value);
+    }
+    if (quantityPerSet.present) {
+      map['quantity_per_set'] = Variable<int>(quantityPerSet.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<int>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<int>(updatedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+  @override
+  String toString() {
+    return (StringBuffer('ProductSetItemsCompanion(')
+          ..write('id: $id, ')
+          ..write('setId: $setId, ')
+          ..write('sizeId: $sizeId, ')
+          ..write('colorId: $colorId, ')
+          ..write('quantityPerSet: $quantityPerSet, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $StockMovementsTable extends StockMovements
+    with TableInfo<$StockMovementsTable, StockMovement> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $StockMovementsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>('id', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _variantIdMeta = VerificationMeta('variantId');
+  @override
+  late final GeneratedColumn<int> variantId = GeneratedColumn<int>('variant_id', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _movementTypeMeta = VerificationMeta('movementType');
+  @override
+  late final GeneratedColumn<String> movementType = GeneratedColumn<String>('movement_type', aliasedName, false, type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _quantityChangeMeta = VerificationMeta('quantityChange');
+  @override
+  late final GeneratedColumn<int> quantityChange = GeneratedColumn<int>('quantity_change', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _balanceAfterMeta = VerificationMeta('balanceAfter');
+  @override
+  late final GeneratedColumn<int> balanceAfter = GeneratedColumn<int>('balance_after', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _reasonMeta = VerificationMeta('reason');
+  @override
+  late final GeneratedColumn<String> reason = GeneratedColumn<String>('reason', aliasedName, true, type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _userIdMeta = VerificationMeta('userId');
+  @override
+  late final GeneratedColumn<int> userId = GeneratedColumn<int>('user_id', aliasedName, true, type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _createdAtMeta = VerificationMeta('createdAt');
+  @override
+  late final GeneratedColumn<int> createdAt = GeneratedColumn<int>('created_at', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [id, variantId, movementType, quantityChange, balanceAfter, reason, userId, createdAt];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'stock_movements';
+  @override
+  VerificationContext validateIntegrity(Insertable<StockMovement> instance, {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('variant_id')) {
+      context.handle(_variantIdMeta, variantId.isAcceptableOrUnknown(data['variant_id']!, _variantIdMeta));
+    } else if (isInserting) {
+      context.missing(_variantIdMeta);
+    }
+    if (data.containsKey('movement_type')) {
+      context.handle(_movementTypeMeta, movementType.isAcceptableOrUnknown(data['movement_type']!, _movementTypeMeta));
+    } else if (isInserting) {
+      context.missing(_movementTypeMeta);
+    }
+    if (data.containsKey('quantity_change')) {
+      context.handle(_quantityChangeMeta, quantityChange.isAcceptableOrUnknown(data['quantity_change']!, _quantityChangeMeta));
+    } else if (isInserting) {
+      context.missing(_quantityChangeMeta);
+    }
+    if (data.containsKey('balance_after')) {
+      context.handle(_balanceAfterMeta, balanceAfter.isAcceptableOrUnknown(data['balance_after']!, _balanceAfterMeta));
+    } else if (isInserting) {
+      context.missing(_balanceAfterMeta);
+    }
+    if (data.containsKey('reason')) {
+      context.handle(_reasonMeta, reason.isAcceptableOrUnknown(data['reason']!, _reasonMeta));
+    }
+    if (data.containsKey('user_id')) {
+      context.handle(_userIdMeta, userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta));
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(_createdAtMeta, createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    return context;
+  }
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  StockMovement map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return StockMovement(
+      id: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      variantId: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}variant_id'])!,
+      movementType: attachedDatabase.typeMapping.read(DriftSqlType.string, data['${effectivePrefix}movement_type'])!,
+      quantityChange: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}quantity_change'])!,
+      balanceAfter: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}balance_after'])!,
+      reason: attachedDatabase.typeMapping.read(DriftSqlType.string, data['${effectivePrefix}reason']),
+      userId: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}user_id']),
+      createdAt: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}created_at'])!,
+    );
+  }
+  @override
+  $StockMovementsTable createAlias(String alias) {
+    return $StockMovementsTable(attachedDatabase, alias);
+  }
+}
+class StockMovement extends DataClass implements Insertable<StockMovement> {
+  final int id;
+  final int variantId;
+  final String movementType;
+  final int quantityChange;
+  final int balanceAfter;
+  final String? reason;
+  final int? userId;
+  final int createdAt;
+  const StockMovement({required this.id, required this.variantId, required this.movementType, required this.quantityChange, required this.balanceAfter, this.reason, this.userId, required this.createdAt});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['variant_id'] = Variable<int>(variantId);
+    map['movement_type'] = Variable<String>(movementType);
+    map['quantity_change'] = Variable<int>(quantityChange);
+    map['balance_after'] = Variable<int>(balanceAfter);
+    if (!nullToAbsent || reason != null) {
+      map['reason'] = Variable<String>(reason);
+    }
+    if (!nullToAbsent || userId != null) {
+      map['user_id'] = Variable<int>(userId);
+    }
+    map['created_at'] = Variable<int>(createdAt);
+    return map;
+  }
+  StockMovementsCompanion toCompanion(bool nullToAbsent) {
+    return StockMovementsCompanion(
+      id: Value(id),
+      variantId: Value(variantId),
+      movementType: Value(movementType),
+      quantityChange: Value(quantityChange),
+      balanceAfter: Value(balanceAfter),
+      reason: reason == null && nullToAbsent ? const Value.absent() : Value(reason),
+      userId: userId == null && nullToAbsent ? const Value.absent() : Value(userId),
+      createdAt: Value(createdAt),
+    );
+  }
+  factory StockMovement.fromMap(Map<String, dynamic> map, {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return StockMovement(
+      id: serializer.fromJson<int>(map['id']),
+      variantId: serializer.fromJson<int>(map['variantId']),
+      movementType: serializer.fromJson<String>(map['movementType']),
+      quantityChange: serializer.fromJson<int>(map['quantityChange']),
+      balanceAfter: serializer.fromJson<int>(map['balanceAfter']),
+      reason: serializer.fromJson<String?>(map['reason']),
+      userId: serializer.fromJson<int?>(map['userId']),
+      createdAt: serializer.fromJson<int>(map['createdAt']),
+    );
+  }
+  @override
+  String toString() {
+    return (StringBuffer('StockMovement(')..write('id: $id, variantId: $variantId, movementType: $movementType, quantityChange: $quantityChange, balanceAfter: $balanceAfter, reason: $reason, userId: $userId, createdAt: $createdAt')..write(')')).toString();
+  }
+  @override
+  int get hashCode => Object.hash(id, variantId, movementType, quantityChange, balanceAfter, reason, userId, createdAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) || (other is StockMovement && other.id == id && other.variantId == variantId && other.movementType == movementType && other.quantityChange == quantityChange && other.balanceAfter == balanceAfter && other.reason == reason && other.userId == userId && other.createdAt == createdAt);
+  StockMovement copyWith({int? id, int? variantId, String? movementType, int? quantityChange, int? balanceAfter, String? reason, int? userId, int? createdAt}) {
+    return StockMovement(
+      id: id ?? this.id,
+      variantId: variantId ?? this.variantId,
+      movementType: movementType ?? this.movementType,
+      quantityChange: quantityChange ?? this.quantityChange,
+      balanceAfter: balanceAfter ?? this.balanceAfter,
+      reason: reason ?? this.reason,
+      userId: userId ?? this.userId,
+      createdAt: createdAt ?? this.createdAt,
+    );
+  }
+}
+class StockMovementsCompanion extends UpdateCompanion<StockMovement> {
+  final Value<int> id;
+  final Value<int> variantId;
+  final Value<String> movementType;
+  final Value<int> quantityChange;
+  final Value<int> balanceAfter;
+  final Value<String?> reason;
+  final Value<int?> userId;
+  final Value<int> createdAt;
+  final Value<int> rowid;
+  const StockMovementsCompanion({
+    this.id = const Value.absent(),
+    this.variantId = const Value.absent(),
+    this.movementType = const Value.absent(),
+    this.quantityChange = const Value.absent(),
+    this.balanceAfter = const Value.absent(),
+    this.reason = const Value.absent(),
+    this.userId = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  StockMovementsCompanion.insert({
+    this.id = const Value.absent(),
+    required int variantId,
+    required String movementType,
+    required int quantityChange,
+    required int balanceAfter,
+    this.reason = const Value.absent(),
+    this.userId = const Value.absent(),
+    required int createdAt,
+    this.rowid = const Value.absent(),
+  }) : variantId = Value(variantId), movementType = Value(movementType), quantityChange = Value(quantityChange), balanceAfter = Value(balanceAfter), createdAt = Value(createdAt);
+  static Insertable<StockMovement> custom({
+    Expression<int>? id,
+    Expression<int>? variantId,
+    Expression<String>? movementType,
+    Expression<int>? quantityChange,
+    Expression<int>? balanceAfter,
+    Expression<String>? reason,
+    Expression<int>? userId,
+    Expression<int>? createdAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (variantId != null) 'variant_id': variantId,
+      if (movementType != null) 'movement_type': movementType,
+      if (quantityChange != null) 'quantity_change': quantityChange,
+      if (balanceAfter != null) 'balance_after': balanceAfter,
+      if (reason != null) 'reason': reason,
+      if (userId != null) 'user_id': userId,
+      if (createdAt != null) 'created_at': createdAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+  StockMovementsCompanion copyWith({
+    Value<int>? id,
+    Value<int>? variantId,
+    Value<String>? movementType,
+    Value<int>? quantityChange,
+    Value<int>? balanceAfter,
+    Value<String?>? reason,
+    Value<int?>? userId,
+    Value<int>? createdAt,
+    Value<int>? rowid,
+  }) {
+    return StockMovementsCompanion(
+      id: id ?? this.id,
+      variantId: variantId ?? this.variantId,
+      movementType: movementType ?? this.movementType,
+      quantityChange: quantityChange ?? this.quantityChange,
+      balanceAfter: balanceAfter ?? this.balanceAfter,
+      reason: reason ?? this.reason,
+      userId: userId ?? this.userId,
+      createdAt: createdAt ?? this.createdAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (variantId.present) {
+      map['variant_id'] = Variable<int>(variantId.value);
+    }
+    if (movementType.present) {
+      map['movement_type'] = Variable<String>(movementType.value);
+    }
+    if (quantityChange.present) {
+      map['quantity_change'] = Variable<int>(quantityChange.value);
+    }
+    if (balanceAfter.present) {
+      map['balance_after'] = Variable<int>(balanceAfter.value);
+    }
+    if (reason.present) {
+      map['reason'] = Variable<String>(reason.value);
+    }
+    if (userId.present) {
+      map['user_id'] = Variable<int>(userId.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<int>(createdAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+  @override
+  String toString() {
+    return (StringBuffer('StockMovementsCompanion(')
+          ..write('id: $id, ')
+          ..write('variantId: $variantId, ')
+          ..write('movementType: $movementType, ')
+          ..write('quantityChange: $quantityChange, ')
+          ..write('balanceAfter: $balanceAfter, ')
+          ..write('reason: $reason, ')
+          ..write('userId: $userId, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $StockAdjustmentsTable extends StockAdjustments
+    with TableInfo<$StockAdjustmentsTable, StockAdjustment> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $StockAdjustmentsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>('id', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _variantIdMeta = VerificationMeta('variantId');
+  @override
+  late final GeneratedColumn<int> variantId = GeneratedColumn<int>('variant_id', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _quantityChangeMeta = VerificationMeta('quantityChange');
+  @override
+  late final GeneratedColumn<int> quantityChange = GeneratedColumn<int>('quantity_change', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _reasonMeta = VerificationMeta('reason');
+  @override
+  late final GeneratedColumn<String> reason = GeneratedColumn<String>('reason', aliasedName, false, type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _userIdMeta = VerificationMeta('userId');
+  @override
+  late final GeneratedColumn<int> userId = GeneratedColumn<int>('user_id', aliasedName, true, type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _createdAtMeta = VerificationMeta('createdAt');
+  @override
+  late final GeneratedColumn<int> createdAt = GeneratedColumn<int>('created_at', aliasedName, false, type: DriftSqlType.int, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [id, variantId, quantityChange, reason, userId, createdAt];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'stock_adjustments';
+  @override
+  VerificationContext validateIntegrity(Insertable<StockAdjustment> instance, {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('variant_id')) {
+      context.handle(_variantIdMeta, variantId.isAcceptableOrUnknown(data['variant_id']!, _variantIdMeta));
+    } else if (isInserting) {
+      context.missing(_variantIdMeta);
+    }
+    if (data.containsKey('quantity_change')) {
+      context.handle(_quantityChangeMeta, quantityChange.isAcceptableOrUnknown(data['quantity_change']!, _quantityChangeMeta));
+    } else if (isInserting) {
+      context.missing(_quantityChangeMeta);
+    }
+    if (data.containsKey('reason')) {
+      context.handle(_reasonMeta, reason.isAcceptableOrUnknown(data['reason']!, _reasonMeta));
+    } else if (isInserting) {
+      context.missing(_reasonMeta);
+    }
+    if (data.containsKey('user_id')) {
+      context.handle(_userIdMeta, userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta));
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(_createdAtMeta, createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    return context;
+  }
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  StockAdjustment map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return StockAdjustment(
+      id: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      variantId: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}variant_id'])!,
+      quantityChange: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}quantity_change'])!,
+      reason: attachedDatabase.typeMapping.read(DriftSqlType.string, data['${effectivePrefix}reason'])!,
+      userId: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}user_id']),
+      createdAt: attachedDatabase.typeMapping.read(DriftSqlType.int, data['${effectivePrefix}created_at'])!,
+    );
+  }
+  @override
+  $StockAdjustmentsTable createAlias(String alias) {
+    return $StockAdjustmentsTable(attachedDatabase, alias);
+  }
+}
+class StockAdjustment extends DataClass implements Insertable<StockAdjustment> {
+  final int id;
+  final int variantId;
+  final int quantityChange;
+  final String reason;
+  final int? userId;
+  final int createdAt;
+  const StockAdjustment({required this.id, required this.variantId, required this.quantityChange, required this.reason, this.userId, required this.createdAt});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['variant_id'] = Variable<int>(variantId);
+    map['quantity_change'] = Variable<int>(quantityChange);
+    map['reason'] = Variable<String>(reason);
+    if (!nullToAbsent || userId != null) {
+      map['user_id'] = Variable<int>(userId);
+    }
+    map['created_at'] = Variable<int>(createdAt);
+    return map;
+  }
+  StockAdjustmentsCompanion toCompanion(bool nullToAbsent) {
+    return StockAdjustmentsCompanion(
+      id: Value(id),
+      variantId: Value(variantId),
+      quantityChange: Value(quantityChange),
+      reason: Value(reason),
+      userId: userId == null && nullToAbsent ? const Value.absent() : Value(userId),
+      createdAt: Value(createdAt),
+    );
+  }
+  factory StockAdjustment.fromMap(Map<String, dynamic> map, {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return StockAdjustment(
+      id: serializer.fromJson<int>(map['id']),
+      variantId: serializer.fromJson<int>(map['variantId']),
+      quantityChange: serializer.fromJson<int>(map['quantityChange']),
+      reason: serializer.fromJson<String>(map['reason']),
+      userId: serializer.fromJson<int?>(map['userId']),
+      createdAt: serializer.fromJson<int>(map['createdAt']),
+    );
+  }
+  @override
+  String toString() {
+    return (StringBuffer('StockAdjustment(')..write('id: $id, variantId: $variantId, quantityChange: $quantityChange, reason: $reason, userId: $userId, createdAt: $createdAt')..write(')')).toString();
+  }
+  @override
+  int get hashCode => Object.hash(id, variantId, quantityChange, reason, userId, createdAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) || (other is StockAdjustment && other.id == id && other.variantId == variantId && other.quantityChange == quantityChange && other.reason == reason && other.userId == userId && other.createdAt == createdAt);
+  StockAdjustment copyWith({int? id, int? variantId, int? quantityChange, String? reason, int? userId, int? createdAt}) {
+    return StockAdjustment(
+      id: id ?? this.id,
+      variantId: variantId ?? this.variantId,
+      quantityChange: quantityChange ?? this.quantityChange,
+      reason: reason ?? this.reason,
+      userId: userId ?? this.userId,
+      createdAt: createdAt ?? this.createdAt,
+    );
+  }
+}
+class StockAdjustmentsCompanion extends UpdateCompanion<StockAdjustment> {
+  final Value<int> id;
+  final Value<int> variantId;
+  final Value<int> quantityChange;
+  final Value<String> reason;
+  final Value<int?> userId;
+  final Value<int> createdAt;
+  final Value<int> rowid;
+  const StockAdjustmentsCompanion({
+    this.id = const Value.absent(),
+    this.variantId = const Value.absent(),
+    this.quantityChange = const Value.absent(),
+    this.reason = const Value.absent(),
+    this.userId = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  StockAdjustmentsCompanion.insert({
+    this.id = const Value.absent(),
+    required int variantId,
+    required int quantityChange,
+    required String reason,
+    this.userId = const Value.absent(),
+    required int createdAt,
+    this.rowid = const Value.absent(),
+  }) : variantId = Value(variantId), quantityChange = Value(quantityChange), reason = Value(reason), createdAt = Value(createdAt);
+  static Insertable<StockAdjustment> custom({
+    Expression<int>? id,
+    Expression<int>? variantId,
+    Expression<int>? quantityChange,
+    Expression<String>? reason,
+    Expression<int>? userId,
+    Expression<int>? createdAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (variantId != null) 'variant_id': variantId,
+      if (quantityChange != null) 'quantity_change': quantityChange,
+      if (reason != null) 'reason': reason,
+      if (userId != null) 'user_id': userId,
+      if (createdAt != null) 'created_at': createdAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+  StockAdjustmentsCompanion copyWith({
+    Value<int>? id,
+    Value<int>? variantId,
+    Value<int>? quantityChange,
+    Value<String>? reason,
+    Value<int?>? userId,
+    Value<int>? createdAt,
+    Value<int>? rowid,
+  }) {
+    return StockAdjustmentsCompanion(
+      id: id ?? this.id,
+      variantId: variantId ?? this.variantId,
+      quantityChange: quantityChange ?? this.quantityChange,
+      reason: reason ?? this.reason,
+      userId: userId ?? this.userId,
+      createdAt: createdAt ?? this.createdAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (variantId.present) {
+      map['variant_id'] = Variable<int>(variantId.value);
+    }
+    if (quantityChange.present) {
+      map['quantity_change'] = Variable<int>(quantityChange.value);
+    }
+    if (reason.present) {
+      map['reason'] = Variable<String>(reason.value);
+    }
+    if (userId.present) {
+      map['user_id'] = Variable<int>(userId.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<int>(createdAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+  @override
+  String toString() {
+    return (StringBuffer('StockAdjustmentsCompanion(')
+          ..write('id: $id, ')
+          ..write('variantId: $variantId, ')
+          ..write('quantityChange: $quantityChange, ')
+          ..write('reason: $reason, ')
+          ..write('userId: $userId, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
 
   _$AppDatabase(QueryExecutor e) : super(e);
@@ -1995,11 +5558,35 @@ abstract class _$AppDatabase extends GeneratedDatabase {
 
   late final $NumberSequencesTable numberSequences = $NumberSequencesTable(this);
 
+  late final $CategoriesTable categories = $CategoriesTable(this);
+
+  late final $BrandsTable brands = $BrandsTable(this);
+
+  late final $ProductSizesTable productSizes = $ProductSizesTable(this);
+
+  late final $ProductColorsTable productColors = $ProductColorsTable(this);
+
+  late final $TaxRatesTable taxRates = $TaxRatesTable(this);
+
+  late final $ProductsTable products = $ProductsTable(this);
+
+  late final $ProductVariantsTable productVariants = $ProductVariantsTable(this);
+
+  late final $PriceTiersTable priceTiers = $PriceTiersTable(this);
+
+  late final $ProductSetsTable productSets = $ProductSetsTable(this);
+
+  late final $ProductSetItemsTable productSetItems = $ProductSetItemsTable(this);
+
+  late final $StockMovementsTable stockMovements = $StockMovementsTable(this);
+
+  late final $StockAdjustmentsTable stockAdjustments = $StockAdjustmentsTable(this);
+
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
 
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [appSettings, users, roles, permissions, rolePermissions, userPermissions, auditLogs, numberSequences];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [appSettings, users, roles, permissions, rolePermissions, userPermissions, auditLogs, numberSequences, categories, brands, productSizes, productColors, taxRates, products, productVariants, priceTiers, productSets, productSetItems, stockMovements, stockAdjustments];
 
 }

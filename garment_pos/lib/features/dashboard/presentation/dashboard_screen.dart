@@ -164,9 +164,16 @@ class _DashboardBody extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     final settingsCount = ref.watch(_settingsCountProvider);
 
+    final canViewProducts =
+        auth is AuthSignedIn && auth.can(AppPermissions.productsView);
     final tiles = <(IconData, String, int?, String?)>[
       (Icons.point_of_sale, l10n.modulePointOfSale, 5, null),
-      (Icons.inventory_2_outlined, l10n.moduleInventory, 3, null),
+      (
+        Icons.inventory_2_outlined,
+        l10n.moduleInventory,
+        canViewProducts ? null : 3,
+        canViewProducts ? AppRoutes.inventory : null,
+      ),
       (Icons.people_outline, l10n.moduleCustomers, 4, null),
       (Icons.shopping_cart_outlined, l10n.modulePurchase, 7, null),
       (Icons.account_balance_outlined, l10n.moduleAccounts, 9, null),

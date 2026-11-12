@@ -146,5 +146,96 @@
   "autoBackup": "Automatic backup (Phase 10)",
   "saved": "Saved",
   "noUsersYet": "No users yet",
-  "shopName": "Shop name"
+  "shopName": "Shop name",
+  "inventory": "Products & Inventory",
+  "addProduct": "Add Product",
+  "editProduct": "Edit Product",
+  "productName": "Product name",
+  "productCode": "Product code",
+  "category": "Category",
+  "brand": "Brand",
+  "subCategory": "Sub-category",
+  "fabric": "Fabric",
+  "fit": "Fit",
+  "sleeve": "Sleeve",
+  "neck": "Neck",
+  "hsnCode": "HSN code",
+  "purchasePrice": "Purchase price (₹)",
+  "wholesalePrice": "Wholesale price (₹)",
+  "retailPrice": "Retail price (₹)",
+  "minSellingPrice": "Minimum selling price (₹)",
+  "mrp": "MRP (₹)",
+  "taxRate": "Tax rate",
+  "wholesaleMinQty": "Wholesale minimum quantity",
+  "lowStockThreshold": "Low stock alert at",
+  "description": "Description",
+  "selectSizesColors": "Select sizes and colours",
+  "openingStock": "Opening stock",
+  "stock": "Stock",
+  "barcode": "Barcode",
+  "variants": "Variants",
+  "totalStock": "Total stock: {count}",
+  "@totalStock": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "searchProducts": "Search name or code",
+  "noProducts": "No products yet. Add your first product.",
+  "masters": "Masters (Category/Brand/Size/Colour/Tax)",
+  "categories": "Categories",
+  "brands": "Brands",
+  "sizes": "Sizes",
+  "colors": "Colours",
+  "taxRates": "Tax Rates",
+  "add": "Add",
+  "name": "Name",
+  "adjustStock": "Adjust stock",
+  "adjustmentQty": "Quantity change (+/-)",
+  "reason": "Reason",
+  "priceTiers": "Price Tiers",
+  "minQty": "Min qty",
+  "unitPrice": "Unit price (₹)",
+  "addTier": "Add tier",
+  "sets": "Size Sets / Bundles",
+  "setName": "Set name",
+  "setType": "Type",
+  "createSet": "Create set",
+  "availableSets": "Complete sets available: {count}",
+  "@availableSets": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "piecesPerSet": "Pieces per set: {count}",
+  "@piecesPerSet": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "lowStock": "Low Stock",
+  "outOfStock": "Out of stock",
+  "labels": "Barcode Labels",
+  "printLabels": "Print Labels (PDF)",
+  "csvTools": "CSV Import / Export",
+  "exportCsv": "Export CSV",
+  "importCsv": "Import CSV",
+  "csvPasteHint": "Paste CSV here, or type a file path below and load it",
+  "filePath": "File path",
+  "loadFile": "Load file",
+  "runImport": "Run Import",
+  "importDone": "Import done",
+  "retailPriceNotSet": "Retail price not set",
+  "costHidden": "Cost hidden by permission",
+  "qtyPerSet": "Qty per set",
+  "delete": "Delete",
+  "productSaved": "Product saved",
+  "duplicateCode": "Product code already exists",
+  "stockNegativeBlocked": "Stock would go negative — blocked (needs admin override)"
 }
