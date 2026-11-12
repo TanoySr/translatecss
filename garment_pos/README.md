@@ -4,11 +4,15 @@ Offline-first Wholesale & Retail Point of Sale and Business Management
 Software for garment shops. One Flutter codebase for **Android mobile,
 Android tablet and Windows desktop**.
 
-> **Current status: Phase 1 (Foundation) — v0.1.0**
-> Login/security (Phase 2), inventory (Phase 3), POS (Phase 5) and the
-> remaining modules are delivered phase by phase. See
-> [ROADMAP.md](ROADMAP.md). No sales numbers anywhere in the app are
-> fake: every screen reads the real SQLite database.
+> **Current status: Phase 2 (Authentication, Security & Settings) — v0.2.0**
+> Inventory (Phase 3), POS (Phase 5) and the remaining modules are
+> delivered phase by phase. See [ROADMAP.md](ROADMAP.md). No sales
+> numbers anywhere in the app are fake: every screen reads the real
+> SQLite database.
+>
+> First launch asks you to create the Owner/Admin account and shows
+> a one-time Recovery Key — save it safely. After that, login works
+> fully offline with username+password or PIN.
 
 ## Features (planned, by phase)
 
