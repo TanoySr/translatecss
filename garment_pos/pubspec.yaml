@@ -1,0 +1,59 @@
+name: garment_pos
+description: Garment POS - Offline-first Wholesale & Retail Point of Sale and Business Management System for garment shops (Android, Tablet, Windows).
+publish_to: 'none'
+version: 0.1.0+1
+
+# Verified on 2026-11-12 against pub.dev:
+# - Flutter stable 3.47.x / Dart 3.13.x is the current stable line.
+# - flutter_riverpod 3.5.0 requires Dart ^3.12.0
+# - go_router 18.1.4 requires Dart ^3.12.0 and Flutter >=3.44.0
+# - drift 2.35.4 / drift_dev 2.35.3 / sqlite3 3.9.1 require Dart >=3.10.0
+# All versions below are pinned so every machine resolves the same code.
+environment:
+  sdk: ^3.12.0
+  flutter: ">=3.44.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  # Localization support used by the generated app_localizations code.
+  intl: ^0.20.2
+
+  # State management (pinned).
+  flutter_riverpod: 3.5.0
+
+  # Declarative navigation (pinned).
+  go_router: 18.1.4
+
+  # Local offline database: SQLite via Drift (pinned).
+  # sqlite3 3.x bundles the native SQLite library through Dart native
+  # assets / build hooks, so the deprecated sqlite3_flutter_libs
+  # package is intentionally NOT used.
+  drift: 2.35.4
+  sqlite3: 3.9.1
+
+  # File locations for the on-device database file.
+  path_provider: 2.1.5
+  path: 1.9.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+  # Drift code generation (run: dart run build_runner build).
+  drift_dev: 2.35.3
+  build_runner: ^2.4.14
+
+flutter:
+  # Enables gen-l10n: ARB files in lib/l10n generate AppLocalizations.
+  generate: true
+  uses-material-design: true
+
+  fonts:
+    - family: NotoSansBengali
+      fonts:
+        - asset: assets/fonts/NotoSansBengali.ttf
