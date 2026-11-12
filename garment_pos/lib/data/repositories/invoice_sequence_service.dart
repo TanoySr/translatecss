@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/constants/app_constants.dart';
 import '../../features/auth/domain/financial_year.dart';
 import '../database/app_database.dart';
+import '../database/database_provider.dart';
 import 'settings_repository.dart';
 
 /// Financial-year invoice numbering, e.g. `GW/2026-27/0001`.

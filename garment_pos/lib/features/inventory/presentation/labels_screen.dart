@@ -12,6 +12,17 @@ import '../domain/inventory_models.dart';
 /// Barcode label preview + PDF label printing (Phase 3).
 /// Each label shows product name, size/colour, wholesale price and
 /// a Code128 barcode of the variant code.
+final _labelProductsProvider = FutureProvider((ref) {
+  return ref.watch(inventoryRepositoryProvider).listProducts();
+});
+
+final _labelVariantsProvider = FutureProvider.family<List<VariantView>, int>((
+  ref,
+  productId,
+) {
+  return ref.watch(inventoryRepositoryProvider).variantsOfProduct(productId);
+});
+
 class LabelsScreen extends ConsumerStatefulWidget {
   const LabelsScreen({super.key});
 
@@ -168,14 +179,6 @@ class _LabelsScreenState extends ConsumerState<LabelsScreen> {
                                     ),
                                   ),
                                   Text('${v.sizeName} / ${v.colorName}'),
-                                  Text(
-                                    Money(
-                                      ref
-                                          .read(inventoryRepositoryProvider)
-                                          .hashCode,
-                                    ).format(),
-                                    style: const TextStyle(fontSize: 0),
-                                  ),
                                   Expanded(
                                     child: BarcodeWidget(
                                       barcode: Barcode.code128(),

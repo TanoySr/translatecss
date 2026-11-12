@@ -16,6 +16,10 @@ part 'app_database.g.dart';
 /// - v1 (Phase 1): `app_settings`
 /// - v2 (Phase 2): users, roles, permissions, role_permissions,
 ///   user_permissions, audit_logs, number_sequences
+/// - v3 (Phase 3): categories, brands, products, product_variants,
+///   product_sizes, product_colors, price_tiers, tax_rates,
+///   stock_movements, stock_adjustments, product_sets,
+///   product_set_items
 @DriftDatabase(
   tables: [
     AppSettings,
@@ -26,6 +30,18 @@ part 'app_database.g.dart';
     UserPermissions,
     AuditLogs,
     NumberSequences,
+    Categories,
+    Brands,
+    ProductSizes,
+    ProductColors,
+    TaxRates,
+    Products,
+    ProductVariants,
+    PriceTiers,
+    ProductSets,
+    ProductSetItems,
+    StockMovements,
+    StockAdjustments,
   ],
 )
 class AppDatabase extends _$AppDatabase {
@@ -55,6 +71,22 @@ class AppDatabase extends _$AppDatabase {
           await migrator.createTable(userPermissions);
           await migrator.createTable(auditLogs);
           await migrator.createTable(numberSequences);
+        }
+        if (from < 3) {
+          // Phase 3: product master & inventory. Existing users,
+          // settings and sequences are untouched.
+          await migrator.createTable(categories);
+          await migrator.createTable(brands);
+          await migrator.createTable(productSizes);
+          await migrator.createTable(productColors);
+          await migrator.createTable(taxRates);
+          await migrator.createTable(products);
+          await migrator.createTable(productVariants);
+          await migrator.createTable(priceTiers);
+          await migrator.createTable(productSets);
+          await migrator.createTable(productSetItems);
+          await migrator.createTable(stockMovements);
+          await migrator.createTable(stockAdjustments);
         }
         // Future steps are added below, oldest first. Each step
         // must preserve existing rows; never drop a business table.

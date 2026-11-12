@@ -2,6 +2,21 @@
 
 All notable changes to Garment POS are documented here.
 
+## [0.3.1] - 2026-11-12 — Phase 3 fix (first Windows run of Phase 3)
+
+### Fixed
+- `app_database.dart`: registered the 12 Phase 3 tables in
+  `@DriftDatabase` and added the `from < 3` migration step. The
+  entries were missing in v0.3.0, so drift_dev generated a schema
+  without products/variants and the build failed with hundreds of
+  "Type 'Product' not found" errors.
+- `invoice_sequence_service.dart`: restored the missing
+  `database_provider.dart` import (`appDatabaseProvider` undefined).
+- Dashboard: `_DashboardBody` used an out-of-scope `auth` variable;
+  `canViewProducts` is now computed once and passed in.
+- Labels screen: restored the missing label providers and removed
+  a stray placeholder widget.
+
 ## [0.3.0] - 2026-11-12 — Phase 3: Product Master & Inventory
 
 ### Added
