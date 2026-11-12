@@ -2,6 +2,45 @@
 
 All notable changes to Garment POS are documented here.
 
+## [0.2.0] - 2026-11-12 — Phase 2: Authentication, Security & Settings
+
+### Added
+- Database schema **version 2** (migration from v1 preserves
+  app_settings): users, roles, permissions, role_permissions,
+  user_permissions, audit_logs, number_sequences.
+- First-run Owner/Admin setup (username, password, PIN) with a
+  one-time Recovery Key; only its PBKDF2 hash is stored.
+- Offline login by username+password or user+PIN (4–6 digits);
+  PBKDF2-HMAC-SHA256 salted hashing via `cryptography` 2.9.0 —
+  never plain SHA-256, never plain text.
+- Roles (Admin/Manager/Salesman) with a seeded, editable
+  permission matrix plus per-user overrides; Salesman cannot see
+  purchase price, product cost or profit by default.
+- User management: create/edit/enable/disable users, password
+  reset, PIN set — all audit-logged.
+- Forgot-password: Admin resets others; owner resets own password
+  with the Recovery Key (audited as `password.recovery_reset`).
+- Auto lock after configurable inactivity (default 5 min) with a
+  lock screen (password/PIN unlock), plus manual lock and sign out.
+- Audit log viewer screen.
+- Full shop settings: profile (name, address, GSTIN, state/code,
+  phone, logo path), invoice prefix with live next-number preview,
+  tax defaults, round-off, printer name/paper size, language,
+  Retail Mode switch, auto-lock minutes, auto-backup preference.
+- Financial-year invoice sequencing (`GW/2026-27/0001`) backed by
+  the number_sequences table inside a database transaction.
+- Dashboard: signed-in user/role header, wholesale/retail mode
+  chip, live Users/Permissions/Audit/Settings tiles by permission.
+- Tests: password hasher, recovery key, financial year + invoice
+  sequence, auth repository (login, PIN, disable, permissions,
+  recovery, audit), retail mode toggle, schema v2 tables.
+
+### Notes
+- Sessions are memory-only: restarting the app requires login.
+- `app_database.g.dart` was regenerated for the 8-table schema;
+  as before, `dart run build_runner build` on a dev PC reproduces
+  it from drift_dev.
+
 ## [0.1.1] - 2026-11-12 — Phase 1 fix (first PC run)
 
 ### Fixed

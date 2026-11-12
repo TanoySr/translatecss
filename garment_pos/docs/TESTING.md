@@ -18,6 +18,10 @@ flutter test
 | `test/database_test.dart` | Schema v1 creates, settings save/read/overwrite/delete, typed int/bool access (in-memory SQLite) |
 | `test/responsive_test.dart` | Breakpoints: <600 mobile, 600–1023 tablet, ≥1024 desktop |
 | `test/app_localization_test.dart` | App boots in Bengali, language switch re-renders in English and persists |
+| `test/password_hasher_test.dart` | PBKDF2 hash format, verify ok/fail, random salt, recovery-key format/normalising |
+| `test/auth_repository_test.dart` | Owner setup, password + PIN login, duplicate user, salesman profit/cost hidden, disabled login blocked, password + recovery reset, role matrix change, audit entries |
+| `test/financial_year_test.dart` | FY Apr–Mar boundaries, invoice sequence increments, FY rollover, custom prefix |
+| `test/retail_mode_test.dart` | Retail Mode defaults OFF, toggling preserves other data |
 
 ## Sandbox limitation (Phase 1)
 

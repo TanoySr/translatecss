@@ -7,7 +7,7 @@ updated at the end of every phase.
 | Phase | Name | Main features | Depends on | Complexity | Status |
 |---|---|---|---|---|---|
 | 1 | Foundation & Architecture | Flutter setup, feature-first folders, Material 3, responsive layout, bn/en localization, Drift+SQLite schema v1, migration skeleton, navigation, dashboard shell | — | Medium | ✅ Done (v0.1.0) |
-| 2 | Authentication, Security & Settings | Admin setup, password/PIN login, PBKDF2 salted hash, recovery key, roles & permission matrix, auto lock, audit log, shop settings, Retail Mode switch, financial-year invoice sequence | 1 | High | ⏳ Pending |
+| 2 | Authentication, Security & Settings | Admin setup, password/PIN login, PBKDF2 salted hash, recovery key, roles & permission matrix, auto lock, audit log, shop settings, Retail Mode switch, financial-year invoice sequence | 1 | High | ✅ Done (v0.2.0) |
 | 3 | Product Master & Inventory | Category/brand, product CRUD, size×colour variant matrix, per-variant barcode, size sets/bundles/cartons, price tiers, opening stock, adjustments, low-stock alerts, CSV import/export | 1, 2 | Very High | ⏳ Pending |
 | 4 | Customer, Supplier & Parties | Customer/supplier/agent CRUD, customer types, credit limit, opening balances, basic ledgers, search | 1, 2 | Medium–High | ⏳ Pending |
 | 5 | Wholesale POS & Sales Engine | Barcode POS, variant selection, wholesale min qty, price tiers, Retail Mode rules, cart, discounts, min-price override, hold/resume, split payment, credit sales, transactional stock deduction | 2, 3, 4 | Very High | ⏳ Pending |

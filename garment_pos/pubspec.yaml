@@ -39,6 +39,12 @@ dependencies:
   path_provider: 2.1.5
   path: 1.9.1
 
+  # Password/PIN hashing (PBKDF2-HMAC-SHA256, salted) - Phase 2.
+  cryptography: 2.9.0
+
+  # Tiny non-business preferences only (never business data).
+  shared_preferences: 2.5.6
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

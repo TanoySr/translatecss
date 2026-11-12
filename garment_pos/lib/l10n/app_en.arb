@@ -1,9 +1,6 @@
 {
   "@@locale": "en",
   "appTitle": "Garment POS",
-  "@appTitle": {
-    "description": "Application title"
-  },
   "dashboard": "Dashboard",
   "settings": "Settings",
   "language": "Language",
@@ -44,7 +41,7 @@
     }
   },
   "openSettings": "Open Settings",
-  "settingsFoundationNote": "Shop settings, login and security will be added in Phase 2. This screen already saves the app language to the real database.",
+  "settingsFoundationNote": "Full shop settings are available in this Phase 2 screen. All values are saved to the real database.",
   "loading": "Loading…",
   "somethingWentWrong": "Something went wrong: {error}",
   "@somethingWentWrong": {
@@ -53,5 +50,101 @@
         "type": "String"
       }
     }
-  }
+  },
+  "setupTitle": "Welcome! Create the Owner Account",
+  "setupSubtitle": "This account will be the shop Owner/Admin. It is created only once.",
+  "username": "Username",
+  "displayName": "Full name",
+  "password": "Password",
+  "confirmPassword": "Confirm password",
+  "pin": "PIN (4–6 digits)",
+  "createOwnerAccount": "Create Owner Account",
+  "recoveryKeyTitle": "Your Recovery Key — Save It Now!",
+  "recoveryKeyWarning": "This key is shown only once. If you forget the Admin password, this key is the only way back in. Print it or write it down and keep it somewhere safe.",
+  "recoveryKeySavedButton": "I Have Saved the Key",
+  "login": "Login",
+  "loginWithPassword": "Password",
+  "loginWithPin": "PIN",
+  "selectUser": "Select user",
+  "forgotPassword": "Forgot password?",
+  "wrongCredentials": "Wrong username/password or PIN. Please try again.",
+  "passwordsDoNotMatch": "Password and confirm password do not match.",
+  "fillAllFields": "Please fill in all fields.",
+  "pinRule": "PIN must be 4 to 6 digits.",
+  "recoveryResetTitle": "Reset Admin Password with Recovery Key",
+  "recoveryKeyLabel": "Recovery Key",
+  "newPassword": "New password",
+  "resetPassword": "Reset Password",
+  "recoveryFailed": "Recovery key did not match.",
+  "passwordResetDone": "Password has been reset. Please login with the new password.",
+  "lockNow": "Lock",
+  "signOut": "Sign Out",
+  "unlock": "Unlock",
+  "lockedMessage": "Session locked. Enter your password or PIN to continue.",
+  "usePasswordInstead": "Use password instead",
+  "usePinInstead": "Use PIN instead",
+  "unlockFailed": "Wrong password/PIN.",
+  "welcomeUser": "Welcome, {name}",
+  "@welcomeUser": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "roleLabel": "Role: {role}",
+  "@roleLabel": {
+    "placeholders": {
+      "role": {
+        "type": "String"
+      }
+    }
+  },
+  "wholesaleMode": "Wholesale Mode",
+  "retailModeLabel": "Retail Mode ON",
+  "users": "Users",
+  "addUser": "Add User",
+  "editUser": "Edit User",
+  "role": "Role",
+  "active": "Active",
+  "inactive": "Disabled",
+  "disable": "Disable",
+  "enable": "Enable",
+  "setPin": "Set PIN",
+  "save": "Save",
+  "cancel": "Cancel",
+  "permissions": "Permissions",
+  "permissionMatrixNote": "Changes apply to every user of the selected role, except users with a personal override.",
+  "auditLog": "Audit Log",
+  "shopProfile": "Shop Profile",
+  "shopAddress": "Shop address",
+  "gstin": "GSTIN",
+  "state": "State",
+  "stateCode": "State code",
+  "shopPhone": "Shop phone",
+  "logoPath": "Logo file path",
+  "invoiceSettings": "Invoice Settings",
+  "invoicePrefix": "Invoice prefix",
+  "nextInvoicePreview": "Next invoice number will be: {number}",
+  "@nextInvoicePreview": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "taxSettings": "Tax Settings",
+  "defaultTaxRatePercent": "Default tax rate (%)",
+  "pricesIncludeTax": "Prices include tax",
+  "roundOffEnabled": "Round off bill total",
+  "printerSettings": "Printer Settings",
+  "printerName": "Printer name",
+  "paperSize": "Paper size",
+  "retailMode": "Enable Retail Mode",
+  "retailModeSubtitle": "Off: wholesale customers and wholesale prices only. On: retail customers and retail prices are also allowed. Old invoices never change.",
+  "autoLockMinutes": "Auto lock after (minutes, 0 = off)",
+  "autoBackup": "Automatic backup (Phase 10)",
+  "saved": "Saved",
+  "noUsersYet": "No users yet",
+  "shopName": "Shop name"
 }
