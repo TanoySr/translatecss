@@ -6,7 +6,42 @@ are integers. Every business table carries `id`, `created_at`,
 `updated_at` (plus `created_by`/`updated_by`/`is_deleted` where the
 phase requires them).
 
-## Schema version 1 (Phase 1 — current)
+## Schema version 2 (Phase 2 — current)
+
+Added by migration `from < 2` (v1 rows untouched):
+
+### users
+| Column | Type | Notes |
+|---|---|---|
+| id | INTEGER PK | autoincrement |
+| username | TEXT | unique |
+| display_name | TEXT | |
+| password_hash | TEXT | PBKDF2 encoded `pbkdf2-sha256$iter$salt$hash` |
+| pin_hash | TEXT NULL | same encoding |
+| role_id | INTEGER FK → roles.id | |
+| is_active | INTEGER (bool) | disabled users cannot log in |
+| created_at / updated_at | INTEGER | epoch ms |
+| created_by | INTEGER NULL | creator user id |
+
+### roles / permissions
+Seeded system roles (`admin`, `manager`, `salesman`) and the
+permission catalogue from `AppPermissions` (e.g. `profit.view`).
+
+### role_permissions / user_permissions
+The permission matrix. A user_permissions row overrides the role
+value for that user. Unique per (role/user, permission).
+
+### audit_logs
+`user_id` (nullable), `action`, `entity_type`, `entity_id`,
+`details`, `created_at`. Written for user setup/create/update/
+enable/disable, password reset (incl. recovery), PIN change,
+permission change, login and logout.
+
+### number_sequences
+`sequence_key` unique (e.g. `invoice:GW:2026-27`), `last_number`,
+`updated_at`. Invoice numbers are taken inside a transaction.
+
+## Schema version 1 (Phase 1)
 
 ### app_settings
 Key-value store for shop/app configuration.

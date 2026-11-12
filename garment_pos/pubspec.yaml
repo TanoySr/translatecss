@@ -1,7 +1,7 @@
 name: garment_pos
 description: Garment POS - Offline-first Wholesale & Retail Point of Sale and Business Management System for garment shops (Android, Tablet, Windows).
 publish_to: 'none'
-version: 0.1.0+1
+version: 0.3.0+3
 
 # Verified on 2026-11-12 against pub.dev:
 # - Flutter stable 3.47.x / Dart 3.13.x is the current stable line.
@@ -38,6 +38,18 @@ dependencies:
   # File locations for the on-device database file.
   path_provider: 2.1.5
   path: 1.9.1
+
+  # Password/PIN hashing (PBKDF2-HMAC-SHA256, salted) - Phase 2.
+  cryptography: 2.9.0
+
+  # Tiny non-business preferences only (never business data).
+  shared_preferences: 2.5.6
+
+  # Barcode rendering + label PDF / printing (Phase 3).
+  # printing 5.15.1 verified against pub.dev; it brings pdf ^3.13.0.
+  barcode_widget: 2.0.4
+  pdf: ^3.13.0
+  printing: 5.15.1
 
 dev_dependencies:
   flutter_test:

@@ -4,17 +4,20 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/localization/locale_provider.dart';
 import '../../../core/router/app_router.dart';
+import '../../../core/settings/app_settings_providers.dart';
 import '../../../core/utils/responsive.dart';
 import '../../../data/database/app_database.dart';
 import '../../../data/repositories/settings_repository.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../auth/data/auth_provider.dart';
+import '../../auth/domain/permissions.dart';
 
-/// Phase 1 dashboard shell.
+/// Dashboard (Phase 1 shell, Phase 2 session header).
 ///
-/// Shows real data only: the live shop name, database connectivity,
-/// schema version and saved-settings count, all read from SQLite.
-/// Business modules appear as tiles labelled with the phase that
-/// will implement them; no fake sales/profit numbers are shown.
+/// Shows real data only: live shop name, signed-in user and role,
+/// wholesale/retail mode, database status and module tiles labelled
+/// with their delivery phase. Settings, Users, Permissions and
+/// Audit Log tiles are live from Phase 2.
 class DashboardScreen extends ConsumerWidget {
   const DashboardScreen({super.key});
 
@@ -22,29 +25,95 @@ class DashboardScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final shopName = ref.watch(shopNameProvider);
+    final auth = ref.watch(authProvider);
+    final user = ref.watch(currentUserProvider);
+    final retailMode = ref.watch(retailModeProvider).value ?? false;
 
     final shopTitle = shopName.maybeWhen(
       data: (name) => (name == null || name.isEmpty) ? null : name,
       orElse: () => null,
     );
 
+    final canManageUsers =
+        auth is AuthSignedIn && auth.can(AppPermissions.usersManage);
+    final canManageSettings =
+        auth is AuthSignedIn && auth.can(AppPermissions.settingsManage);
+    final canViewAudit =
+        auth is AuthSignedIn && auth.can(AppPermissions.auditView);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(shopTitle ?? l10n.appTitle),
         actions: [
           const _LanguageMenu(),
+          if (canManageSettings)
+            IconButton(
+              icon: const Icon(Icons.settings_outlined),
+              tooltip: l10n.settings,
+              onPressed: () => context.go(AppRoutes.settings),
+            ),
           IconButton(
-            icon: const Icon(Icons.settings_outlined),
-            tooltip: l10n.settings,
-            onPressed: () => context.go(AppRoutes.settings),
+            icon: const Icon(Icons.lock_outline),
+            tooltip: l10n.lockNow,
+            onPressed: () => ref.read(authProvider.notifier).lock(),
+          ),
+          IconButton(
+            icon: const Icon(Icons.logout),
+            tooltip: l10n.signOut,
+            onPressed: () => ref.read(authProvider.notifier).signOut(),
           ),
         ],
       ),
       body: ResponsiveLayout(
-        mobile: (context) => const _DashboardBody(crossAxisCount: 2),
-        tablet: (context) => const _DashboardBody(crossAxisCount: 3),
-        desktop: (context) => const _DashboardBody(crossAxisCount: 4),
+        mobile: (context) => _DashboardBody(
+          crossAxisCount: 2,
+          canManageUsers: canManageUsers,
+          canManageSettings: canManageSettings,
+          canViewAudit: canViewAudit,
+        ),
+        tablet: (context) => _DashboardBody(
+          crossAxisCount: 3,
+          canManageUsers: canManageUsers,
+          canManageSettings: canManageSettings,
+          canViewAudit: canViewAudit,
+        ),
+        desktop: (context) => _DashboardBody(
+          crossAxisCount: 4,
+          canManageUsers: canManageUsers,
+          canManageSettings: canManageSettings,
+          canViewAudit: canViewAudit,
+        ),
       ),
+      bottomNavigationBar: (user == null)
+          ? null
+          : SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 8,
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        '${l10n.welcomeUser(user.displayName)} • '
+                        '${l10n.roleLabel(user.roleName)}',
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    Chip(
+                      avatar: Icon(
+                        retailMode ? Icons.storefront : Icons.warehouse,
+                        size: 18,
+                      ),
+                      label: Text(
+                        retailMode ? l10n.retailModeLabel : l10n.wholesaleMode,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
     );
   }
 }
@@ -78,22 +147,49 @@ class _LanguageMenu extends ConsumerWidget {
 }
 
 class _DashboardBody extends ConsumerWidget {
-  const _DashboardBody({required this.crossAxisCount});
+  const _DashboardBody({
+    required this.crossAxisCount,
+    required this.canManageUsers,
+    required this.canManageSettings,
+    required this.canViewAudit,
+  });
 
   final int crossAxisCount;
+  final bool canManageUsers;
+  final bool canManageSettings;
+  final bool canViewAudit;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final settingsCount = ref.watch(_settingsCountProvider);
 
-    final modules = <(IconData, String, int)>[
-      (Icons.point_of_sale, l10n.modulePointOfSale, 5),
-      (Icons.inventory_2_outlined, l10n.moduleInventory, 3),
-      (Icons.people_outline, l10n.moduleCustomers, 4),
-      (Icons.shopping_cart_outlined, l10n.modulePurchase, 7),
-      (Icons.account_balance_outlined, l10n.moduleAccounts, 9),
-      (Icons.backup_outlined, l10n.moduleBackup, 10),
+    final canViewProducts =
+        auth is AuthSignedIn && auth.can(AppPermissions.productsView);
+    final tiles = <(IconData, String, int?, String?)>[
+      (Icons.point_of_sale, l10n.modulePointOfSale, 5, null),
+      (
+        Icons.inventory_2_outlined,
+        l10n.moduleInventory,
+        canViewProducts ? null : 3,
+        canViewProducts ? AppRoutes.inventory : null,
+      ),
+      (Icons.people_outline, l10n.moduleCustomers, 4, null),
+      (Icons.shopping_cart_outlined, l10n.modulePurchase, 7, null),
+      (Icons.account_balance_outlined, l10n.moduleAccounts, 9, null),
+      (Icons.backup_outlined, l10n.moduleBackup, 10, null),
+      if (canManageUsers) (Icons.group_outlined, l10n.users, null, AppRoutes.users),
+      if (canManageUsers)
+        (
+          Icons.admin_panel_settings_outlined,
+          l10n.permissions,
+          null,
+          AppRoutes.permissions,
+        ),
+      if (canViewAudit)
+        (Icons.history, l10n.auditLog, null, AppRoutes.auditLog),
+      if (canManageSettings)
+        (Icons.settings_outlined, l10n.settings, null, AppRoutes.settings),
     ];
 
     return ListView(
@@ -110,8 +206,7 @@ class _DashboardBody extends ConsumerWidget {
                 '${l10n.savedSettingsCount(count)}',
               ),
               loading: () => Text(l10n.loading),
-              error: (error, _) =>
-                  Text(l10n.somethingWentWrong('$error')),
+              error: (error, _) => Text(l10n.somethingWentWrong('$error')),
             ),
           ),
         ),
@@ -130,29 +225,34 @@ class _DashboardBody extends ConsumerWidget {
             mainAxisSpacing: 12,
             childAspectRatio: 1.15,
           ),
-          itemCount: modules.length,
+          itemCount: tiles.length,
           itemBuilder: (context, index) {
-            final (icon, label, phase) = modules[index];
+            final (icon, label, phase, route) = tiles[index];
             return Card(
-              child: Padding(
-                padding: const EdgeInsets.all(12),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(icon, size: 32),
-                    const SizedBox(height: 8),
-                    Text(
-                      label,
-                      textAlign: TextAlign.center,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    const SizedBox(height: 6),
-                    Chip(
-                      label: Text(l10n.plannedInPhase(phase)),
-                      visualDensity: VisualDensity.compact,
-                    ),
-                  ],
+              child: InkWell(
+                onTap: route == null ? null : () => context.go(route),
+                child: Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(icon, size: 32),
+                      const SizedBox(height: 8),
+                      Text(
+                        label,
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      if (phase != null) ...[
+                        const SizedBox(height: 6),
+                        Chip(
+                          label: Text(l10n.plannedInPhase(phase)),
+                          visualDensity: VisualDensity.compact,
+                        ),
+                      ],
+                    ],
+                  ),
                 ),
               ),
             );

@@ -10,18 +10,29 @@ part 'app_database.g.dart';
 /// 1. [schemaVersion] only ever increases.
 /// 2. Every increase ships with a step in [migration] that upgrades
 ///    the previous version *without deleting business data*.
-/// 3. A migration regression test (test/database_test.dart and the
-///    per-phase tests) must prove old data survives the upgrade.
+/// 3. A migration regression test must prove old data survives.
 ///
-/// Phase 1 = schema version 1 (foundation `app_settings` table).
-/// Users/auth arrive in Phase 2 (version 2), inventory in Phase 3
-/// (version 3), and so on — see docs/DATABASE_SCHEMA.md.
-@DriftDatabase(tables: [AppSettings])
+/// History:
+/// - v1 (Phase 1): `app_settings`
+/// - v2 (Phase 2): users, roles, permissions, role_permissions,
+///   user_permissions, audit_logs, number_sequences
+@DriftDatabase(
+  tables: [
+    AppSettings,
+    Users,
+    Roles,
+    Permissions,
+    RolePermissions,
+    UserPermissions,
+    AuditLogs,
+    NumberSequences,
+  ],
+)
 class AppDatabase extends _$AppDatabase {
   AppDatabase(super.executor);
 
   /// Current schema version. Increment by exactly 1 per migration.
-  static const int currentSchemaVersion = 1;
+  static const int currentSchemaVersion = 3;
 
   @override
   int get schemaVersion => currentSchemaVersion;
@@ -33,10 +44,20 @@ class AppDatabase extends _$AppDatabase {
         await migrator.createAll();
       },
       onUpgrade: (migrator, from, to) async {
-        // Future schema steps are added here, oldest first, e.g.:
-        // if (from < 2) { ... Phase 2 tables ... }
-        // Each step must preserve existing rows. Never drop a
-        // business table as part of an upgrade.
+        if (from < 2) {
+          // Phase 2: authentication, roles/permissions, audit log
+          // and number sequences. Existing v1 data (app_settings)
+          // is untouched by this step.
+          await migrator.createTable(users);
+          await migrator.createTable(roles);
+          await migrator.createTable(permissions);
+          await migrator.createTable(rolePermissions);
+          await migrator.createTable(userPermissions);
+          await migrator.createTable(auditLogs);
+          await migrator.createTable(numberSequences);
+        }
+        // Future steps are added below, oldest first. Each step
+        // must preserve existing rows; never drop a business table.
       },
       beforeOpen: (details) async {
         // Enforce foreign keys for every connection.
